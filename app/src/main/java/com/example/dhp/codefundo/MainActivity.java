@@ -2,6 +2,7 @@ package com.example.dhp.codefundo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import java.io.*;
 import android.app.*;
 import android.content.*;
@@ -11,6 +12,9 @@ import android.view.*;
 import android.graphics.*;
 import android.widget.*;
 import android.provider.*;
+
+import com.microsoft.projectoxford.face.*;
+import com.microsoft.projectoxford.face.contract.*;
 
 public class MainActivity extends AppCompatActivity {
 
