@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final int PICK_IMAGE = 1;
     private ProgressDialog detectionProgressDialog;
+    static final String SERVER_HOST="https://southeastasia.api.cognitive.microsoft.com/face/v1.0";
+    static final String SUBSCRIPTION_KEY="eb5c5e259ead4741b0e2792b17fbc98c";
 
     private FaceServiceClient faceServiceClient;
 
@@ -53,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
 //        createGroup("students");
 
 
-        Button button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
+        Button browse =  findViewById(R.id.browse);
+        Button createPerson = findViewById(R.id.createPerson);
+        browse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -62,9 +65,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
             }
         });
+        createPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreatePerson.class);
+                startActivity(intent);
+            }
+        });
         detectionProgressDialog = new ProgressDialog(this);
 
-        faceServiceClient = new FaceServiceRestClient("https://southeastasia.api.cognitive.microsoft.com/face/v1.0", "eb5c5e259ead4741b0e2792b17fbc98c");
+        faceServiceClient = new FaceServiceRestClient(SERVER_HOST,SUBSCRIPTION_KEY );
     }
 
     @Override
@@ -186,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Request headers. Replace the example key with your valid subscription key.
             request.setHeader("Content-Type", "application/json");
-            request.setHeader("Ocp-Apim-Subscription-Key", "eb5c5e259ead4741b0e2792b17fbc98c");
+            request.setHeader("Ocp-Apim-Subscription-Key", MainActivity.SUBSCRIPTION_KEY);
             // Request body. The name field is the display name you want for the group (must be under 128 characters).
             // The size limit for what you want to include in the userData field is 16KB.
             String body = "{ \"name\":\"My Group to try\",\"userData\":\"User-provided data attached to the PersonGroup.\" }";

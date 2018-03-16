@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.dhp.codefundo.CreatePerson">
+    <EditText
+        android:id="@+id/personGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter group name"
+        />
+    <EditText
+        android:id="@+id/personRoll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Roll Number"
+        />
+    <EditText
+        android:id="@+id/personName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter name"
+        />
+    <Button
+        android:id="@+id/submitPerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="createPerson"/>
+
+</LinearLayout>
