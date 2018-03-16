@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private final int PICK_IMAGE = 1;
     private ProgressDialog detectionProgressDialog;
 
+    private FaceServiceClient faceServiceClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         detectionProgressDialog = new ProgressDialog(this);
+
+        faceServiceClient = new FaceServiceRestClient("https://southeastasia.api.cognitive.microsoft.com/face/v1.0", "eb5c5e259ead4741b0e2792b17fbc98c");
     }
 
     @Override
