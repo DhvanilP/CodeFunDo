@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
             }
         });
-
         detectionProgressDialog = new ProgressDialog(this);
     }
 
