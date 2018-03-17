@@ -24,10 +24,9 @@ public class CreatePerson extends AppCompatActivity {
     EditText personroll;
     Button submitPerson;
     ProgressDialog detectionProgressDialog;
-    private FaceServiceClient faceServiceClient;
     HashMap<String, Person> personsData;
     Person[] persons;
-
+    private FaceServiceClient faceServiceClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
