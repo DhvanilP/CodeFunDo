@@ -29,4 +29,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.microsoft.projectoxford:face:1.0.0'
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
 }
