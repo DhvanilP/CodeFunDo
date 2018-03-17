@@ -34,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
     static final String SERVER_HOST = "https://southeastasia.api.cognitive.microsoft.com/face/v1.0";
     static final String SUBSCRIPTION_KEY = "eb5c5e259ead4741b0e2792b17fbc98c";
+    static  int i=0;
     private static FaceServiceClient faceServiceClient;
     private final int PICK_IMAGE = 1;
-    ProgressDialog detectionProgressDialog;
+    ProgressDialog  detectionProgressDialog;
 
     private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
         Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -48,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
         int stokeWidth = 2;
         paint.setStrokeWidth(stokeWidth);
         if (faces != null) {
+            i=0;
+            UUID[] faceuuid = new UUID[faces.length];
             for (Face face : faces) {
                 FaceRectangle faceRectangle = face.faceRectangle;
-                UUID[] faceuuid = new UUID[1];
-                faceuuid[0] = face.faceId;
-                Log.d("print", "*********************");
-                findname(faceuuid, "testing");
+                faceuuid[i] = face.faceId;
+                i+=1;
                 canvas.drawRect(
                         faceRectangle.left,
                         faceRectangle.top,
@@ -61,20 +62,24 @@ public class MainActivity extends AppCompatActivity {
                         faceRectangle.top + faceRectangle.height,
                         paint);
             }
+            Log.d("print", "*********************");
+            findname(faceuuid, "testing");
         }
         return bitmap;
     }
 
     private static void findname(final UUID[] faceofperson, final String groupname) {
+        faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
         Thread thread = new Thread() {
             @Override
             public void run() {
                 try {
                     System.out.print("hello world");
                     IdentifyResult[] identifyResults = faceServiceClient.identity(groupname, faceofperson, 1);
-                    for (Candidate candidate : identifyResults[0].candidates) {
-                        Log.d("print", faceServiceClient.getPerson("testing", candidate.personId).name);
-                        Log.d("print", faceServiceClient.getPerson("testing", candidate.personId).userData);
+                    for(IdentifyResult i : identifyResults)
+                        for (Candidate candidate : i.candidates) {
+                            Log.d("print", faceServiceClient.getPerson("testing", candidate.personId).name);
+                            Log.d("print", faceServiceClient.getPerson("testing", candidate.personId).userData);
                     }
                 } catch (ClientException e) {
                     e.printStackTrace();
