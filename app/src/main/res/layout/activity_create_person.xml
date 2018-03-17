@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.dhp.codefundo.CreatePerson">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/details">
+
     <EditText
         android:id="@+id/personGroup"
         android:layout_width="match_parent"
@@ -25,10 +32,30 @@
         android:layout_height="wrap_content"
         android:hint="Enter name"
         />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/image" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
     <Button
         android:id="@+id/submitPerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="createPerson"/>
+    </LinearLayout>
+
 
 </LinearLayout>
