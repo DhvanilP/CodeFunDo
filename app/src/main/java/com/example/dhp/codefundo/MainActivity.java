@@ -40,6 +40,47 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog  detectionProgressDialog;
     String groupid;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        if(getIntent().hasExtra("groupId")) {
+            groupid = getIntent().getStringExtra("groupId");
+        }
+        detectionProgressDialog = new ProgressDialog(this);
+        detectionProgressDialog.setMessage("Creating person");
+        detectionProgressDialog.setCanceledOnTouchOutside(false);
+
+
+        faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
+//        createGroup("lol2");
+//        deleteGroup("lol");
+
+
+        Button browse = findViewById(R.id.browse);
+        Button createPerson = findViewById(R.id.createPerson);
+        browse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                gallIntent.setType("image/*");
+                startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
+                detectionProgressDialog.show();
+
+            }
+        });
+        createPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreatePerson.class);
+                intent.putExtra("groupId",groupid);
+                startActivity(intent);
+            }
+        });
+
+    }
+
     private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
         Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(bitmap);
@@ -94,47 +135,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Detect faces by uploading face images
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        if(getIntent().hasExtra("groupId")) {
-            groupid = getIntent().getStringExtra("groupId");
-        }
-        detectionProgressDialog = new ProgressDialog(this);
-        detectionProgressDialog.setMessage("Creating person");
-        detectionProgressDialog.setCanceledOnTouchOutside(false);
-
-
-        faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-//        createGroup("lol2");
-//        deleteGroup("lol");
-
-
-        Button browse = findViewById(R.id.browse);
-        Button createPerson = findViewById(R.id.createPerson);
-        browse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                gallIntent.setType("image/*");
-                startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
-                detectionProgressDialog.show();
-
-            }
-        });
-        createPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreatePerson.class);
-                intent.putExtra("groupId",groupid);
-                startActivity(intent);
-            }
-        });
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
