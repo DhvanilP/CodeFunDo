@@ -123,7 +123,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/createPersongroup"
+            android:id="@+id/create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#008080"
