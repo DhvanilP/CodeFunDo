@@ -3,7 +3,7 @@ package com.example.dhp.codefundo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class Create_group extends AppCompatActivity {
+public class CreateGroup extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFF66"
-    tools:context="com.example.dhp.codefundo.homepage">
+    tools:context="com.example.dhp.codefundo.HomePage">
 
     <TextView
         android:id="@+id/top"

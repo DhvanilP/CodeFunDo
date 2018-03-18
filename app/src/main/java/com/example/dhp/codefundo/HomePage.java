@@ -18,7 +18,7 @@ import com.microsoft.projectoxford.face.rest.ClientException;
 
 import java.io.IOException;
 
-public class homepage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
 
     static final String SERVER_HOST = "https://southeastasia.api.cognitive.microsoft.com/face/v1.0";
     static final String SUBSCRIPTION_KEY = "eb5c5e259ead4741b0e2792b17fbc98c";
@@ -31,23 +31,23 @@ public class homepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-       // specify an adapter (see also next example)
+        // specify an adapter (see also next example)
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
         StrictMode.setThreadPolicy(policy);
 
-        try{
+        try {
             PersonGroup[] all_person_groups = faceServiceClient.getPersonGroups();
 
-            a= new String[all_person_groups.length];
-            int i=0;
-            for( PersonGroup p : all_person_groups){
-                a[i]=(i+1)+".)" + p.personGroupId;
-                Log.d("names:",a[i]);
+            a = new String[all_person_groups.length];
+            int i = 0;
+            for (PersonGroup p : all_person_groups) {
+                a[i] = (i + 1) + ".)" + p.personGroupId;
+                Log.d("names:", a[i]);
                 i++;
             }
 
-            simpleList = (ListView)findViewById(R.id.simpleListView);
+            simpleList = (ListView) findViewById(R.id.simpleListView);
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.listview, R.id.textView, a);
             simpleList.setAdapter(arrayAdapter);
 
@@ -63,8 +63,8 @@ public class homepage extends AppCompatActivity {
                                     long id) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 String msg = a[position];
-                Log.d("passedstring",msg);
-                intent.putExtra("groupId",msg);
+                Log.d("passedstring", msg);
+                intent.putExtra("groupId", msg);
                 startActivity(intent);
             }
         });
@@ -73,7 +73,7 @@ public class homepage extends AppCompatActivity {
         createperson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),CreatePerson.class);
+                Intent i = new Intent(getApplicationContext(), CreatePerson.class);
                 startActivity(i);
             }
         });
