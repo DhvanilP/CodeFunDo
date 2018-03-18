@@ -244,6 +244,12 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         imageutils.onActivityResult(requestCode, resultCode, data);
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),HomePage.class);
+        startActivity(i);
     }
 }

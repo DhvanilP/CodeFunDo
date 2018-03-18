@@ -262,9 +262,20 @@ public class CreatePerson extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        i.putExtra("groupId",groupid);
+        startActivity(i);
+    }
+
     private void calltraing(String testing) {
         try {
             faceServiceClient.trainPersonGroup(testing);
+            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+            i.putExtra("groupId",groupid);
+            startActivity(i);
         } catch (ClientException e) {
             e.printStackTrace();
         } catch (IOException e) {

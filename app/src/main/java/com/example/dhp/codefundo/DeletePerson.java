@@ -29,6 +29,15 @@ public class DeletePerson extends AppCompatActivity {
     private String[] a;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        i.putExtra("groupId",groupid);
+        startActivity(i);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_person);

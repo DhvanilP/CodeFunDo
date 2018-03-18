@@ -53,6 +53,13 @@ public class CreateGroup extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),HomePage.class);
+        startActivity(i);
+    }
+
     private void createGroup(final String grpid, final String grpname, final String grpuserdata) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
         StrictMode.setThreadPolicy(policy);

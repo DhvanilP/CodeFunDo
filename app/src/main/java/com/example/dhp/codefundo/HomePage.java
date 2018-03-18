@@ -27,6 +27,13 @@ public class HomePage extends AppCompatActivity {
     private String[] a,b;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        System.exit(0);
+        onDestroy();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
