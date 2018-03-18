@@ -17,7 +17,7 @@ public class MarkAttendence extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        Intent i = new Intent(getApplicationContext(),PersonGroup.class);
         i.putExtra("groupId",groupid);
         startActivity(i);
     }

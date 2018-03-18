@@ -56,7 +56,7 @@ public class CreateGroup extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),HomePage.class);
+        Intent i = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(i);
     }
 
@@ -78,7 +78,7 @@ public class CreateGroup extends AppCompatActivity {
             faceServiceClient.createPersonGroup(grpid, grpname, grpuserdata);
             Toast.makeText(getApplicationContext(), "Person Group has been created", Toast.LENGTH_SHORT).show();
             createGroupDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), HomePage.class);
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
 
         } catch (Exception e) {

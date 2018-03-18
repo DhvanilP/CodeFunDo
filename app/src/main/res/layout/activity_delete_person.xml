@@ -6,7 +6,7 @@
     android:background="#FFFF66"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context="com.example.dhp.codefundo.HomePage">
+    tools:context="com.example.dhp.codefundo.MainActivity">
 
 
     <LinearLayout

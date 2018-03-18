@@ -97,7 +97,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         personsData = new HashMap<>();
         personGroup.setText(groupid);
         personGroup.setEnabled(false);
-        faceServiceClient = new FaceServiceRestClient(MainActivity.SERVER_HOST, MainActivity.SUBSCRIPTION_KEY);
+        faceServiceClient = new FaceServiceRestClient(PersonGroup.SERVER_HOST, PersonGroup.SUBSCRIPTION_KEY);
 
         image = findViewById(R.id.image);
         image.setOnClickListener(new View.OnClickListener() {
@@ -249,7 +249,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(getApplicationContext(), PersonGroup.class);
         i.putExtra("groupId", groupid);
         startActivity(i);
     }
@@ -258,7 +258,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         try {
             faceServiceClient.trainPersonGroup(testing);
             detectionProgressDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            Intent i = new Intent(getApplicationContext(), PersonGroup.class);
             i.putExtra("groupId", groupid);
             startActivity(i);
         } catch (ClientException e) {

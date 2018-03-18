@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFF66"
-    android:padding="5dp"
     android:orientation="vertical"
-    tools:context="com.example.dhp.codefundo.HomePage">
+    android:padding="5dp"
+    tools:context="com.example.dhp.codefundo.MainActivity">
 
 
     <LinearLayout
         android:id="@+id/spacing"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_below="@+id/top"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
@@ -34,9 +34,9 @@
         android:id="@+id/layoutforrecyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_below="@+id/spacing"
         android:layout_weight="6"
         android:background="#00ff6666"
-        android:layout_below="@+id/spacing"
         android:orientation="vertical">
 
 

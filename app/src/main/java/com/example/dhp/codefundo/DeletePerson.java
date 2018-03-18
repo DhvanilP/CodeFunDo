@@ -73,7 +73,7 @@ public class DeletePerson extends AppCompatActivity {
                 try {
                     faceServiceClient.deletePerson(groupid, personID[position]);
                     Toast.makeText(getApplicationContext(),"Person deleted",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent i = new Intent(getApplicationContext(), PersonGroup.class);
                     i.putExtra("groupId", groupid);
                     startActivity(i);
                 } catch (ClientException e) {
@@ -91,7 +91,7 @@ public class DeletePerson extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(getApplicationContext(), PersonGroup.class);
         i.putExtra("groupId", groupid);
         startActivity(i);
 
