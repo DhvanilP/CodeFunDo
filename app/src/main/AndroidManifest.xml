@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".CreatePerson" />
         <activity android:name=".HomePage">
             <intent-filter>
@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateGroup" />
-        <activity android:name=".DeletePerson"></activity>
+        <activity android:name=".DeletePerson" />
+        <activity android:name=".MarkAttendence"></activity>
     </application>
 
 </manifest>

@@ -80,7 +80,6 @@ public class DeletePerson extends AppCompatActivity {
                                     long id) {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
                 StrictMode.setThreadPolicy(policy);
-
                 try {
                     faceServiceClient.deletePerson(groupid,b[position]);
                     Toast.makeText(getApplicationContext(),"Person has been Deleted",Toast.LENGTH_SHORT).show();

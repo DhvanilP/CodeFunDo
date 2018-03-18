@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
@@ -46,10 +45,11 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
     ProgressDialog detectionProgressDialog;
     ImageView iv_attachment;
     Imageutils imageutils;
+    Button markattendence;
     private Bitmap bitmap;
     private String file_name;
 
-    private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
+    private Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
         Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
@@ -78,44 +78,41 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
         return bitmap;
     }
 
-    private static void findname(final UUID[] faceofperson, final String groupname) {
+    private void findname(final UUID[] faceofperson, final String groupname) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
+        StrictMode.setThreadPolicy(policy);
         faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    System.out.print("hello world");
-                    IdentifyResult[] identifyResults = faceServiceClient.identity(groupname, faceofperson, 1);
-                    personroll = new String[identifyResults.length];
-                    personnames = new String[identifyResults.length];
-                    int k=0;
-                    for (IdentifyResult i : identifyResults)
-                        for (Candidate candidate : i.candidates) {
-                            personnames[k]= faceServiceClient.getPerson(groupname, candidate.personId).name;
-                            personroll[k]=faceServiceClient.getPerson(groupname, candidate.personId).userData;
-                            k++;
-                    }
-                } catch (ClientException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        try {
+            IdentifyResult[] identifyResults = faceServiceClient.identity(groupname, faceofperson, 1);
+            personroll = new String[identifyResults.length];
+            personnames = new String[identifyResults.length];
+            int k=0;
+            for (IdentifyResult i : identifyResults)
+                for (Candidate candidate : i.candidates) {
+                    personnames[k]= faceServiceClient.getPerson(groupname, candidate.personId).name;
+                    personroll[k]=faceServiceClient.getPerson(groupname, candidate.personId).userData;
+                    k++;
                 }
-            }
-        };
-        thread.start();
-
+            markattendence.setEnabled(true);
+        } catch (ClientException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        markattendence = findViewById(R.id.markattendence);
         imageutils = new Imageutils(this);
         if (getIntent().hasExtra("groupId")) {
             groupid = getIntent().getStringExtra("groupId");
             Log.d("print:",groupid);
         }
+        markattendence.setEnabled(false);
         detectionProgressDialog = new ProgressDialog(this);
         detectionProgressDialog.setMessage("Creating person");
         detectionProgressDialog.setCanceledOnTouchOutside(false);
@@ -128,6 +125,15 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
             }
         });
 
+        markattendence.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),MarkAttendence.class);
+                i.putExtra("personsnames",personnames);
+                i.putExtra("personrolls",personroll);
+                startActivity(i);
+            }
+        });
         final Button Deleteperson = findViewById(R.id.deletePerson);
         Deleteperson.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,18 +219,20 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
     }
 
     private void deleteGroup(final String groupName) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
-        StrictMode.setThreadPolicy(policy);
-        try {
-            faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-            faceServiceClient.deletePersonGroup(groupName);
-            Toast.makeText(getApplicationContext(),"Group Has been deleted",Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(getApplicationContext(),HomePage.class);
-            startActivity(i);
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+        Thread deletinggroup = new Thread(){
+            @Override
+            public void run(){
+                try {
+                    faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
+                    faceServiceClient.deletePersonGroup(groupName);
+                    Intent i = new Intent(getApplicationContext(),HomePage.class);
+                    startActivity(i);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        deletinggroup.start();
     }
 
     @Override

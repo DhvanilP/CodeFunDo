@@ -29,8 +29,10 @@ public class HomePage extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        System.exit(0);
-        onDestroy();
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 
     @Override
