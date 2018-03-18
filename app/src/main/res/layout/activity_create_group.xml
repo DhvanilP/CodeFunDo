@@ -71,6 +71,7 @@
             />
 
         <EditText
+            android:id="@+id/groupname"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"
@@ -92,6 +93,7 @@
             />
 
         <EditText
+            android:id="@+id/groupuserdata"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"
@@ -119,6 +121,7 @@
         android:layout_below="@id/separatorlayout"
         android:gravity="center"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/createPersongroup"
             android:layout_width="match_parent"

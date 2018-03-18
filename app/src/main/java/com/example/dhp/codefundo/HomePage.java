@@ -73,7 +73,7 @@ public class HomePage extends AppCompatActivity {
         createperson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), CreatePerson.class);
+                Intent i = new Intent(getApplicationContext(), CreateGroup.class);
                 startActivity(i);
             }
         });

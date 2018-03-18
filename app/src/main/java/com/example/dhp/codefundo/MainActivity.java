@@ -210,21 +210,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Frame faces after detection
-    private void createGroup(final String student) {
-        Thread background = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-                    faceServiceClient.createPersonGroup(student, "try", "lol2");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        background.start();
-    }
 
     private void deleteGroup(final String groupName) {
         Thread background = new Thread() {
