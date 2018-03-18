@@ -1,5 +1,6 @@
 package com.example.dhp.codefundo;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -20,18 +21,24 @@ public class CreateGroup extends AppCompatActivity {
     String persongroupname;
     String persongroupuserdata;
     FaceServiceRestClient faceServiceClient;
+    ProgressDialog createGroupDialog;
     EditText groupid;
+    EditText groupname;
+    EditText groupuserdata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
-        groupid = (EditText) findViewById(R.id.groupidname);
-        final EditText groupname = (EditText) findViewById(R.id.groupname);
-        final EditText groupuserdata = (EditText) findViewById(R.id.groupuserdata);
+        groupid = findViewById(R.id.groupidname);
+        groupname = findViewById(R.id.groupname);
+        groupuserdata = findViewById(R.id.groupuserdata);
+        createGroupDialog = new ProgressDialog(this);
+        createGroupDialog.setMessage("Creating Group");
+        createGroupDialog.setCanceledOnTouchOutside(false);
 
 
-        Button create = (Button)findViewById(R.id.create);
+        Button create = findViewById(R.id.create);
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,38 +46,37 @@ public class CreateGroup extends AppCompatActivity {
                 persongroupId = groupid.getText().toString().trim();
                 persongroupname = groupname.getText().toString().trim();
                 persongroupuserdata = groupuserdata.getText().toString().trim();
-                createGroup(persongroupId,persongroupname,persongroupuserdata);
-
+                createGroup(persongroupId, persongroupname, persongroupuserdata);
+                createGroupDialog.show();
             }
         });
 
     }
 
-    private void createGroup(final String grpid,final String grpname,final String grpuserdata ) {
+    private void createGroup(final String grpid, final String grpname, final String grpuserdata) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
         StrictMode.setThreadPolicy(policy);
-
         try {
             faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
             PersonGroup[] all_person_groups = faceServiceClient.getPersonGroups();
-            int flag=0;
             for (PersonGroup p : all_person_groups) {
-                if(p.personGroupId.equals(grpid)){
-                    flag=1;
+                if (p.personGroupId.equals(grpid)) {
                     groupid.setError("This group already exist");
                     groupid.requestFocus();
+                    createGroupDialog.dismiss();
                     return;
                 }
             }
-            if(flag==0){
-                faceServiceClient.createPersonGroup(grpid,grpname,grpuserdata);
-                Toast.makeText(getApplicationContext(),"Person Group has been created",Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(getApplicationContext(),HomePage.class);
-                startActivity(i);
-            }
+            faceServiceClient.createPersonGroup(grpid, grpname, grpuserdata);
+            Toast.makeText(getApplicationContext(), "Person Group has been created", Toast.LENGTH_SHORT).show();
+            createGroupDialog.dismiss();
+            Intent i = new Intent(getApplicationContext(), HomePage.class);
+            startActivity(i);
+
         } catch (Exception e) {
             e.printStackTrace();
+            createGroupDialog.dismiss();
         }
     }
 }

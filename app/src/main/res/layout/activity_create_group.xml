@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFF66"
+    android:orientation="vertical"
     tools:context="com.example.dhp.codefundo.HomePage">
 
-    <TextView
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:gravity="center"
-        android:text="Create Group "
-        android:textColor="#000000"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        />
 
     <LinearLayout
         android:id="@+id/spacing"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@+id/top"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Create Group "
+            android:textColor="#000000"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/layoutforrecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spacing"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:padding="5dp"
         android:background="#FFFF66"
         android:orientation="vertical">
 
@@ -44,8 +49,7 @@
             android:background="#FFFF66"
             android:text="Enter personGroupId :"
             android:textColor="#000000"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/groupidname"
@@ -55,8 +59,7 @@
             android:layout_marginRight="10dp"
             android:background="#FFFFFF"
             android:hint="person group Id"
-            android:textColor="#000000"
-            />
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/namequestion"
@@ -67,8 +70,7 @@
             android:background="#FFFF66"
             android:text="Enter personGroup name :"
             android:textColor="#000000"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/groupname"
@@ -78,8 +80,8 @@
             android:layout_marginRight="10dp"
             android:background="#FFFFFF"
             android:hint="person group name"
-            android:textColor="#000000"
-            />
+            android:textColor="#000000" />
+
         <TextView
             android:id="@+id/userdataquestion"
             android:layout_width="match_parent"
@@ -89,8 +91,7 @@
             android:background="#FFFF66"
             android:text="Enter personGroup user-data:"
             android:textColor="#000000"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/groupuserdata"
@@ -100,36 +101,28 @@
             android:layout_marginRight="10dp"
             android:background="#FFFFFF"
             android:hint="person group user-data"
-            android:textColor="#000000"
-            />
+            android:textColor="#000000" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/separatorlayout"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@+id/layoutforrecyclerview"
-        android:orientation="horizontal">
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/buttonlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/separatorlayout"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+
+        android:gravity="center|bottom"
+        android:padding="5dp">
 
         <Button
             android:id="@+id/create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#008080"
+            android:background="@color/colorPrimary"
             android:text="Create "
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -17,19 +17,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/browse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@color/colorPrimary"
             android:text="Browse" />
 
         <Button
             android:id="@+id/createPerson"
+            android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@color/colorPrimary"
+            android:text="create person" />
+
+        <Button
+            android:id="@+id/deletePerson"
+            android:layout_marginStart="5dp"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:text="create person" />
 
     </LinearLayout>
