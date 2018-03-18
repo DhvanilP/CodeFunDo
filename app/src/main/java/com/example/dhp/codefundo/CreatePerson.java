@@ -55,6 +55,29 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
     private String file_name;
     private FaceServiceClient faceServiceClient;
 
+    private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
+        Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.RED);
+        int stokeWidth = 2;
+        paint.setStrokeWidth(stokeWidth);
+        if (faces != null) {
+            for (Face face : faces) {
+                FaceRectangle faceRectangle = face.faceRectangle;
+                canvas.drawRect(
+                        faceRectangle.left,
+                        faceRectangle.top,
+                        faceRectangle.left + faceRectangle.width,
+                        faceRectangle.top + faceRectangle.height,
+                        paint);
+            }
+        }
+        return bitmap;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,30 +145,6 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         });
 
     }
-
-    private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
-        Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.RED);
-        int stokeWidth = 2;
-        paint.setStrokeWidth(stokeWidth);
-        if (faces != null) {
-            for (Face face : faces) {
-                FaceRectangle faceRectangle = face.faceRectangle;
-                canvas.drawRect(
-                        faceRectangle.left,
-                        faceRectangle.top,
-                        faceRectangle.left + faceRectangle.width,
-                        faceRectangle.top + faceRectangle.height,
-                        paint);
-            }
-        }
-        return bitmap;
-    }
-
 
     private void detectAndFrame(final Bitmap imageBitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -217,10 +216,8 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
                     String group = personGroup.getText().toString();
                     String rollNumber = personroll.getText().toString();
                     try {
-
                         CreatePersonResult res = faceServiceClient.createPerson(group, name, rollNumber);
-                        detectionProgressDialog.dismiss();
-
+//                        detectionProgressDialog.dismiss();
                         calladdface(res.personId, rollNumber);
 
                     } catch (Exception e) {
@@ -243,10 +240,8 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         }
         try {
             faceServiceClient.addPersonFace(groupid, personId, io, roll, faceRectangle);
-            calltraing("testing");
-        } catch (ClientException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            calltraing(groupid);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -262,6 +257,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
     private void calltraing(String testing) {
         try {
             faceServiceClient.trainPersonGroup(testing);
+            detectionProgressDialog.dismiss();
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             i.putExtra("groupId", groupid);
             startActivity(i);

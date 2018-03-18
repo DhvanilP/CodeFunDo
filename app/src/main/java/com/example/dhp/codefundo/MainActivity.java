@@ -1,6 +1,8 @@
 package com.example.dhp.codefundo;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
     static int i = 0;
     static String groupid;
     private static FaceServiceClient faceServiceClient;
-    private static String[] personroll,personnames;
+    private static String[] personroll, personnames;
     private final int PICK_IMAGE = 1;
     ProgressDialog detectionProgressDialog;
     ImageView iv_attachment;
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
             IdentifyResult[] identifyResults = faceServiceClient.identity(groupname, faceofperson, 1);
             personroll = new String[identifyResults.length];
             personnames = new String[identifyResults.length];
-            int k=0;
+            int k = 0;
             for (IdentifyResult i : identifyResults) {
                 for (Candidate candidate : i.candidates) {
                     personnames[k] = faceServiceClient.getPerson(groupname, candidate.personId).name;
@@ -95,11 +97,11 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
                     k++;
                 }
             }
-            if(k!=0) {
+            if (k != 0) {
                 markattendence.setEnabled(true);
             }
-            if(markattendence.isEnabled()==false){
-                Toast.makeText(getApplicationContext(),"persons identity is not present in database please add identity of these persons",Toast.LENGTH_SHORT).show();
+            if (markattendence.isEnabled() == false) {
+                Toast.makeText(getApplicationContext(), "persons identity is not present in database please add identity of these persons", Toast.LENGTH_SHORT).show();
             }
         } catch (ClientException e) {
             e.printStackTrace();
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
         imageutils = new Imageutils(this);
         if (getIntent().hasExtra("groupId")) {
             groupid = getIntent().getStringExtra("groupId");
-            Log.d("print:",groupid);
+            Log.d("print:", groupid);
         }
         markattendence.setEnabled(false);
         detectionProgressDialog = new ProgressDialog(this);
@@ -136,15 +138,14 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
             @Override
             public void onClick(View view) {
 
-                if(personnames.length!=0){
-                    Intent i = new Intent(getApplicationContext(),MarkAttendence.class);
-                    i.putExtra("personsnames",personnames);
-                    i.putExtra("personrolls",personroll);
-                    i.putExtra("groupId",groupid);
+                if (personnames.length != 0) {
+                    Intent i = new Intent(getApplicationContext(), MarkAttendence.class);
+                    i.putExtra("personsnames", personnames);
+                    i.putExtra("personrolls", personroll);
+                    i.putExtra("groupId", groupid);
                     startActivity(i);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"No matches of this person found in our database",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No matches of this person found in our database", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -152,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
         deletePerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),DeletePerson.class);
-                i.putExtra("groupId",groupid);
+                Intent i = new Intent(getApplicationContext(), DeletePerson.class);
+                i.putExtra("groupId", groupid);
                 startActivity(i);
             }
         });
@@ -233,20 +234,30 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
     }
 
     private void deleteGroup(final String groupName) {
-        Thread deletinggroup = new Thread(){
-            @Override
-            public void run(){
-                try {
-                    faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-                    faceServiceClient.deletePersonGroup(groupName);
-                    Intent i = new Intent(getApplicationContext(),HomePage.class);
-                    startActivity(i);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        deletinggroup.start();
+        new AlertDialog.Builder(this).setTitle("Delete")
+                .setMessage("Do you really want to delete this group")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Thread deletinggroup = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
+                                    faceServiceClient.deletePersonGroup(groupName);
+                                    Intent i = new Intent(getApplicationContext(), HomePage.class);
+                                    startActivity(i);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        deletinggroup.start();
+                    }
+                })
+                .setNegativeButton("NO", null)
+                .show();
+
     }
 
     @Override
@@ -276,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),HomePage.class);
+        Intent i = new Intent(getApplicationContext(), HomePage.class);
         startActivity(i);
     }
 }

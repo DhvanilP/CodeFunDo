@@ -24,18 +24,9 @@ public class DeletePerson extends AppCompatActivity {
     static final String SUBSCRIPTION_KEY = "eb5c5e259ead4741b0e2792b17fbc98c";
     private static FaceServiceClient faceServiceClient;
     ListView simpleList;
-    UUID[] b;
+    UUID[] personID;
     String groupid;
-    private String[] a;
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        i.putExtra("groupId", groupid);
-        startActivity(i);
-
-    }
+    private String[] rollNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +45,18 @@ public class DeletePerson extends AppCompatActivity {
         try {
             Person[] personarray = faceServiceClient.getPersons(groupid);
 
-            a = new String[personarray.length];
-            b = new UUID[personarray.length];
+            rollNumber = new String[personarray.length];
+            personID = new UUID[personarray.length];
             int i = 0;
             for (Person p : personarray) {
-                a[i] = (i + 1) + ".)" + p.userData;
-                b[i] = p.personId;
-                Log.d("names:", a[i]);
+                rollNumber[i] = (i + 1) + ".)" + p.userData;
+                personID[i] = p.personId;
+                Log.d("names:", rollNumber[i]);
                 i++;
             }
 
             simpleList = findViewById(R.id.simpleListView);
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.listview, R.id.textView, a);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.listview, R.id.textView, rollNumber);
             simpleList.setAdapter(arrayAdapter);
 
         } catch (Exception e) {
@@ -74,27 +65,38 @@ public class DeletePerson extends AppCompatActivity {
 
         simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
+            public void onItemClick(AdapterView<?> parent, View view, final int position,
                                     long id) {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
-                StrictMode.setThreadPolicy(policy);
+
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
+                        StrictMode.setThreadPolicy(policy);
                 try {
-                    faceServiceClient.deletePerson(groupid, b[position]);
-                    Toast.makeText(getApplicationContext(), "Person has been Deleted", Toast.LENGTH_SHORT).show();
+                    faceServiceClient.deletePerson(groupid, personID[position]);
+                    Toast.makeText(getApplicationContext(),"Person deleted",Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     i.putExtra("groupId", groupid);
                     startActivity(i);
-
                 } catch (ClientException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
+
             }
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        i.putExtra("groupId", groupid);
+        startActivity(i);
+
+    }
+
 }
 
 
