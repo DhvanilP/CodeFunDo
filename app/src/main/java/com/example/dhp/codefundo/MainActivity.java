@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
@@ -87,13 +88,19 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
             personroll = new String[identifyResults.length];
             personnames = new String[identifyResults.length];
             int k=0;
-            for (IdentifyResult i : identifyResults)
+            for (IdentifyResult i : identifyResults) {
                 for (Candidate candidate : i.candidates) {
-                    personnames[k]= faceServiceClient.getPerson(groupname, candidate.personId).name;
-                    personroll[k]=faceServiceClient.getPerson(groupname, candidate.personId).userData;
+                    personnames[k] = faceServiceClient.getPerson(groupname, candidate.personId).name;
+                    personroll[k] = faceServiceClient.getPerson(groupname, candidate.personId).userData;
                     k++;
                 }
-            markattendence.setEnabled(true);
+            }
+            if(k!=0) {
+                markattendence.setEnabled(true);
+            }
+            if(markattendence.isEnabled()==false){
+                Toast.makeText(getApplicationContext(),"persons identity is not present in database please add identity of these persons",Toast.LENGTH_SHORT).show();
+            }
         } catch (ClientException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -128,10 +135,17 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
         markattendence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),MarkAttendence.class);
-                i.putExtra("personsnames",personnames);
-                i.putExtra("personrolls",personroll);
-                startActivity(i);
+
+                if(personnames.length!=0){
+                    Intent i = new Intent(getApplicationContext(),MarkAttendence.class);
+                    i.putExtra("personsnames",personnames);
+                    i.putExtra("personrolls",personroll);
+                    i.putExtra("groupId",groupid);
+                    startActivity(i);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"No matches of this person found in our database",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         final Button Deleteperson = findViewById(R.id.deletePerson);
