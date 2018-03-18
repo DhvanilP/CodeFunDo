@@ -39,10 +39,11 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
     static final String SERVER_HOST = "https://southeastasia.api.cognitive.microsoft.com/face/v1.0";
     static final String SUBSCRIPTION_KEY = "eb5c5e259ead4741b0e2792b17fbc98c";
     static int i = 0;
+    static String groupid;
     private static FaceServiceClient faceServiceClient;
+    private static String[] personroll,personnames;
     private final int PICK_IMAGE = 1;
     ProgressDialog detectionProgressDialog;
-    String groupid;
     ImageView iv_attachment;
     Imageutils imageutils;
     private Bitmap bitmap;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
                         paint);
             }
             Log.d("print", "*********************");
-            findname(faceuuid, "testing");
+            findname(faceuuid, groupid);
         }
         return bitmap;
     }
@@ -85,11 +86,15 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
                 try {
                     System.out.print("hello world");
                     IdentifyResult[] identifyResults = faceServiceClient.identity(groupname, faceofperson, 1);
+                    personroll = new String[identifyResults.length];
+                    personnames = new String[identifyResults.length];
+                    int k=0;
                     for (IdentifyResult i : identifyResults)
                         for (Candidate candidate : i.candidates) {
-                            Log.d("print", faceServiceClient.getPerson("testing", candidate.personId).name);
-                            Log.d("print", faceServiceClient.getPerson("testing", candidate.personId).userData);
-                        }
+                            personnames[k]= faceServiceClient.getPerson(groupname, candidate.personId).name;
+                            personroll[k]=faceServiceClient.getPerson(groupname, candidate.personId).userData;
+                            k++;
+                    }
                 } catch (ClientException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
