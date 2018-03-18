@@ -35,18 +35,42 @@ import java.util.Iterator;
 import java.util.UUID;
 
 public class CreatePerson extends AppCompatActivity {
+    private final int PICK_IMAGE = 1;
     EditText personName;
     EditText personGroup;
     EditText personroll;
     Button submitPerson;
-    private final int PICK_IMAGE = 1;
     ProgressDialog detectionProgressDialog;
     HashMap<String, Person> personsData;
     Person[] persons;
     Face[] result;
-    private FaceServiceClient faceServiceClient;
     ImageView image;
     InputStream io;
+    private FaceServiceClient faceServiceClient;
+
+    private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
+        Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.RED);
+        int stokeWidth = 2;
+        paint.setStrokeWidth(stokeWidth);
+        if (faces != null) {
+            for (Face face : faces) {
+                FaceRectangle faceRectangle = face.faceRectangle;
+                canvas.drawRect(
+                        faceRectangle.left,
+                        faceRectangle.top,
+                        faceRectangle.left + faceRectangle.width,
+                        faceRectangle.top + faceRectangle.height,
+                        paint);
+            }
+        }
+        return bitmap;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +120,7 @@ public class CreatePerson extends AppCompatActivity {
         thread.start();
 
 
-        submitPerson = findViewById(R.id.submitPerson);
+        submitPerson = findViewById(R.id.createPerson);
         submitPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +134,6 @@ public class CreatePerson extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -126,29 +149,6 @@ public class CreatePerson extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
-        Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.RED);
-        int stokeWidth = 2;
-        paint.setStrokeWidth(stokeWidth);
-        if (faces != null) {
-            for (Face face : faces) {
-                FaceRectangle faceRectangle = face.faceRectangle;
-                canvas.drawRect(
-                        faceRectangle.left,
-                        faceRectangle.top,
-                        faceRectangle.left + faceRectangle.width,
-                        faceRectangle.top + faceRectangle.height,
-                        paint);
-            }
-        }
-        return bitmap;
     }
 
     private void detectAndFrame(final Bitmap imageBitmap) {

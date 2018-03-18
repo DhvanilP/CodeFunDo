@@ -1,60 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFF66"
     android:orientation="vertical"
     tools:context="com.example.dhp.codefundo.CreatePerson">
 
+
     <LinearLayout
+        android:id="@+id/details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/details">
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="ADD PERSON"
+            android:textColor="#000000"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            />
 
     <EditText
         android:id="@+id/personGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="#ffffff"
         android:hint="Enter group name"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:textStyle="italic"
         />
+
     <EditText
         android:id="@+id/personRoll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="#ffffff"
         android:hint="Enter Roll Number"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:textStyle="italic"
         />
     <EditText
         android:id="@+id/personName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="#ffffff"
         android:hint="Enter name"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:textStyle="italic"
         />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/image"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/image" />
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/buttonlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-    <Button
-        android:id="@+id/submitPerson"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="createPerson"/>
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/createPerson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Create NEW PERSON"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 
