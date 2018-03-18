@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
@@ -41,7 +42,7 @@ public class homepage extends AppCompatActivity {
             a= new String[all_person_groups.length];
             int i=0;
             for( PersonGroup p : all_person_groups){
-                a[i]=p.personGroupId;
+                a[i]=(i+1)+".)" + p.personGroupId;
                 Log.d("names:",a[i]);
                 i++;
             }
@@ -65,6 +66,15 @@ public class homepage extends AppCompatActivity {
                 Log.d("passedstring",msg);
                 intent.putExtra("groupId",msg);
                 startActivity(intent);
+            }
+        });
+
+        final Button createperson = (Button) findViewById(R.id.createPersongroup);
+        createperson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),CreatePerson.class);
+                startActivity(i);
             }
         });
 

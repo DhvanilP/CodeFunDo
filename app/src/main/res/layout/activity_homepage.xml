@@ -3,20 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFF66"
     tools:context="com.example.dhp.codefundo.homepage">
+
+    <TextView
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:gravity="center"
+        android:text="Groups"
+        android:textColor="#000000"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:id="@+id/spacing"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/top"
+        android:orientation="horizontal">
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/layoutforrecyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/spacing"
+        android:background="#DCDCDC"
         android:orientation="vertical">
+
 
         <ListView
             android:id="@+id/simpleListView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:divider="@color/material_blue_grey_800"
-            android:dividerHeight="10dp" />
+            android:divider="#FFFF66"
+            android:dividerHeight="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -24,7 +49,6 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:layout_below="@+id/layoutforrecyclerview"
-        android:background="@color/material_blue_grey_800"
         android:orientation="horizontal">
     </LinearLayout>
 
@@ -38,9 +62,11 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/createPersongroup"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create New Person Group" />
+            android:background="#008080"
+            android:text="Create New Person Group"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 
