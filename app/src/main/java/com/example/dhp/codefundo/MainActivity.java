@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
                 }
             }
         });
-        final Button Deleteperson = findViewById(R.id.deletePerson);
-        Deleteperson.setOnClickListener(new View.OnClickListener() {
+        final Button deletePerson = findViewById(R.id.deletePerson);
+        deletePerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),DeletePerson.class);

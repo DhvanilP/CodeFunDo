@@ -31,8 +31,8 @@ public class DeletePerson extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),MainActivity.class);
-        i.putExtra("groupId",groupid);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        i.putExtra("groupId", groupid);
         startActivity(i);
 
     }
@@ -45,7 +45,7 @@ public class DeletePerson extends AppCompatActivity {
 
         if (getIntent().hasExtra("groupId")) {
             groupid = getIntent().getStringExtra("groupId");
-            Log.d("print:",groupid);
+            Log.d("print:", groupid);
         }
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
@@ -55,22 +55,20 @@ public class DeletePerson extends AppCompatActivity {
             Person[] personarray = faceServiceClient.getPersons(groupid);
 
             a = new String[personarray.length];
-            b= new UUID[personarray.length];
+            b = new UUID[personarray.length];
             int i = 0;
             for (Person p : personarray) {
                 a[i] = (i + 1) + ".)" + p.userData;
-                b[i]=p.personId;
+                b[i] = p.personId;
                 Log.d("names:", a[i]);
                 i++;
             }
 
-            simpleList = (ListView) findViewById(R.id.simpleListView);
+            simpleList = findViewById(R.id.simpleListView);
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.listview, R.id.textView, a);
             simpleList.setAdapter(arrayAdapter);
 
-        } catch (ClientException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -81,10 +79,10 @@ public class DeletePerson extends AppCompatActivity {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
                 StrictMode.setThreadPolicy(policy);
                 try {
-                    faceServiceClient.deletePerson(groupid,b[position]);
-                    Toast.makeText(getApplicationContext(),"Person has been Deleted",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                    i.putExtra("groupId",groupid);
+                    faceServiceClient.deletePerson(groupid, b[position]);
+                    Toast.makeText(getApplicationContext(), "Person has been Deleted", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    i.putExtra("groupId", groupid);
                     startActivity(i);
 
                 } catch (ClientException e) {
@@ -98,4 +96,5 @@ public class DeletePerson extends AppCompatActivity {
 
     }
 }
+
 
