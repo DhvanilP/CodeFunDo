@@ -9,7 +9,8 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,55 +27,66 @@ import com.microsoft.projectoxford.face.rest.ClientException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Imageutils.ImageAttachmentListener {
 
     static final String SERVER_HOST = "https://southeastasia.api.cognitive.microsoft.com/face/v1.0";
     static final String SUBSCRIPTION_KEY = "eb5c5e259ead4741b0e2792b17fbc98c";
-    static  int i=0;
+    static int i = 0;
     private static FaceServiceClient faceServiceClient;
     private final int PICK_IMAGE = 1;
-    ProgressDialog  detectionProgressDialog;
+    ProgressDialog detectionProgressDialog;
     String groupid;
+    private Bitmap bitmap;
+    private String file_name;
+    ImageView iv_attachment;
+    Imageutils imageutils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(getIntent().hasExtra("groupId")) {
+        imageutils = new Imageutils(this);
+        if (getIntent().hasExtra("groupId")) {
             groupid = getIntent().getStringExtra("groupId");
         }
         detectionProgressDialog = new ProgressDialog(this);
         detectionProgressDialog.setMessage("Creating person");
         detectionProgressDialog.setCanceledOnTouchOutside(false);
-
-
         faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
+        iv_attachment = findViewById(R.id.imageViewAttach);
+        iv_attachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageutils.imagepicker(1);
+            }
+        });
 //        createGroup("lol2");
 //        deleteGroup("lol");
 
 
         Button browse = findViewById(R.id.browse);
         Button createPerson = findViewById(R.id.createPerson);
-        browse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                gallIntent.setType("image/*");
-                startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
-                detectionProgressDialog.show();
-
-            }
-        });
+//        browse.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//                gallIntent.setType("image/*");
+//                startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
+//                detectionProgressDialog.show();
+//
+//            }
+//        });
         createPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CreatePerson.class);
-                intent.putExtra("groupId",groupid);
+                intent.putExtra("groupId", groupid);
                 startActivity(intent);
             }
         });
@@ -91,12 +103,12 @@ public class MainActivity extends AppCompatActivity {
         int stokeWidth = 2;
         paint.setStrokeWidth(stokeWidth);
         if (faces != null) {
-            i=0;
+            i = 0;
             UUID[] faceuuid = new UUID[faces.length];
             for (Face face : faces) {
                 FaceRectangle faceRectangle = face.faceRectangle;
                 faceuuid[i] = face.faceId;
-                i+=1;
+                i += 1;
                 canvas.drawRect(
                         faceRectangle.left,
                         faceRectangle.top,
@@ -118,11 +130,11 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     System.out.print("hello world");
                     IdentifyResult[] identifyResults = faceServiceClient.identity(groupname, faceofperson, 1);
-                    for(IdentifyResult i : identifyResults)
+                    for (IdentifyResult i : identifyResults)
                         for (Candidate candidate : i.candidates) {
                             Log.d("print", faceServiceClient.getPerson("testing", candidate.personId).name);
                             Log.d("print", faceServiceClient.getPerson("testing", candidate.personId).userData);
-                    }
+                        }
                 } catch (ClientException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -136,23 +148,23 @@ public class MainActivity extends AppCompatActivity {
 
     // Detect faces by uploading face images
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri uri = data.getData();
-            try {
-
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-
-                ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-                imageView.setImageBitmap(bitmap);
-                detectAndFrame(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            Uri uri = data.getData();
+//            try {
+//
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//
+//                ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+//                imageView.setImageBitmap(bitmap);
+//                detectAndFrame(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     private void detectAndFrame(final Bitmap imageBitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -201,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 //TODO: update face frames
                 detectionProgressDialog.dismiss();
                 if (result == null) return;
-                ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+                ImageView imageView = (ImageView) findViewById(R.id.imageViewAttach);
                 imageView.setImageBitmap(drawFaceRectanglesOnBitmap(imageBitmap, result));
                 imageBitmap.recycle();
             }
@@ -227,4 +239,28 @@ public class MainActivity extends AppCompatActivity {
         background.start();
     }
 
+    @Override
+    public void image_attachment(int from, String filename, Bitmap file, Uri uri) {
+        this.bitmap = file;
+        this.file_name = filename;
+        iv_attachment.setImageBitmap(file);
+        System.out.print(" fdfsdagkjhgfdsdfghjkjhgfdsdfghj" + file);
+
+        String path = Environment.getExternalStorageDirectory() + File.separator + "ImageAttach" + File.separator;
+        imageutils.createImage(file, filename, path, false);
+        detectAndFrame(file);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        imageutils.request_permission_result(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imageutils.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

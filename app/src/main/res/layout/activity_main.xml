@@ -10,13 +10,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_weight="1">
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/imageViewAttach"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="todo"
+            android:contentDescription="TODO"
             android:src="@drawable/ph_add_image" />
 
     </LinearLayout>
@@ -24,42 +24,59 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="center|bottom"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/browse"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="@color/colorPrimary"
-            android:text="Browse" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/createPerson"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="@color/colorPrimary"
-            android:text="create person" />
+            <Button
+                android:id="@+id/browse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="Mark Attendace" />
 
-        <Button
-            android:id="@+id/deletePerson"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="@color/colorPrimary"
-            android:text="delete person" />
+            <Button
+                android:id="@+id/createPerson"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="create person" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/deleteGroup"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="@color/colorPrimary"
-            android:text="delete group" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/deletePerson"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="delete person" />
+
+            <Button
+                android:id="@+id/deleteGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="delete current group" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
