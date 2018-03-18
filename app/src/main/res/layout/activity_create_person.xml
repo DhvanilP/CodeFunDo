@@ -72,8 +72,8 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ph_add_image"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ph_add_image" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,6 +89,4 @@
             android:text="Create NEW PERSON"
             android:textColor="#FFFFFF" />
     </LinearLayout>
-
-
 </LinearLayout>

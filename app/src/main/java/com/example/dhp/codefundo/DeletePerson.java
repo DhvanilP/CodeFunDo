@@ -8,43 +8,49 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
-import com.microsoft.projectoxford.face.contract.PersonGroup;
+import com.microsoft.projectoxford.face.contract.Person;
 import com.microsoft.projectoxford.face.rest.ClientException;
 
 import java.io.IOException;
+import java.util.UUID;
 
-public class HomePage extends AppCompatActivity {
-
+public class DeletePerson extends AppCompatActivity {
     static final String SERVER_HOST = "https://southeastasia.api.cognitive.microsoft.com/face/v1.0";
     static final String SUBSCRIPTION_KEY = "eb5c5e259ead4741b0e2792b17fbc98c";
     private static FaceServiceClient faceServiceClient;
     ListView simpleList;
-    private String[] a,b;
+    UUID[] b;
+    String groupid;
+    private String[] a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
+        setContentView(R.layout.activity_delete_person);
         faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-        // specify an adapter (see also next example)
+
+        if (getIntent().hasExtra("groupId")) {
+            groupid = getIntent().getStringExtra("groupId");
+            Log.d("print:",groupid);
+        }
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
         StrictMode.setThreadPolicy(policy);
 
         try {
-            PersonGroup[] all_person_groups = faceServiceClient.getPersonGroups();
+            Person[] personarray = faceServiceClient.getPersons(groupid);
 
-            a = new String[all_person_groups.length];
-            b= new String[all_person_groups.length];
+            a = new String[personarray.length];
+            b= new UUID[personarray.length];
             int i = 0;
-            for (PersonGroup p : all_person_groups) {
-                a[i] = (i + 1) + ".)" + p.personGroupId;
-                b[i]=p.personGroupId;
+            for (Person p : personarray) {
+                a[i] = (i + 1) + ".)" + p.userData;
+                b[i]=p.personId;
                 Log.d("names:", a[i]);
                 i++;
             }
@@ -63,22 +69,25 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                String msg = b[position];
-                Log.d("passedstring", msg);
-                intent.putExtra("groupId", msg);
-                startActivity(intent);
-            }
-        });
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
+                StrictMode.setThreadPolicy(policy);
 
-        final Button createperson = (Button) findViewById(R.id.createPersongroup);
-        createperson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), CreateGroup.class);
-                startActivity(i);
+                try {
+                    faceServiceClient.deletePerson(groupid,b[position]);
+                    Toast.makeText(getApplicationContext(),"Person has been Deleted",Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                    i.putExtra("groupId",groupid);
+                    startActivity(i);
+
+                } catch (ClientException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
     }
 }
+

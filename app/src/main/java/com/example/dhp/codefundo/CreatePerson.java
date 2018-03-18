@@ -46,6 +46,7 @@ public class CreatePerson extends AppCompatActivity {
     Face[] result;
     ImageView image;
     InputStream io;
+    String groupid;
     private FaceServiceClient faceServiceClient;
 
     private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
@@ -75,6 +76,10 @@ public class CreatePerson extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_person);
+        if (getIntent().hasExtra("groupId")) {
+            groupid = getIntent().getStringExtra("groupId");
+            Log.d("print:",groupid);
+        }
         detectionProgressDialog = new ProgressDialog(this);
         detectionProgressDialog.setMessage("Creating person");
         detectionProgressDialog.setCanceledOnTouchOutside(false);
@@ -83,6 +88,8 @@ public class CreatePerson extends AppCompatActivity {
         personGroup = findViewById(R.id.personGroup);
         personroll = findViewById(R.id.personRoll);
         personsData = new HashMap<>();
+        personGroup.setText(groupid);
+        personGroup.setEnabled(false);
         faceServiceClient = new FaceServiceRestClient(MainActivity.SERVER_HOST, MainActivity.SUBSCRIPTION_KEY);
 
         image = (ImageView)findViewById(R.id.image);
@@ -102,7 +109,7 @@ public class CreatePerson extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    persons = faceServiceClient.getPersons("testing");
+                    persons = faceServiceClient.getPersons(groupid);
                     for (Person person : persons) {
                         personsData.put(person.userData, person);
                     }
@@ -246,7 +253,7 @@ public class CreatePerson extends AppCompatActivity {
             faceRectangle = face.faceRectangle;
         }
         try {
-            faceServiceClient.addPersonFace("testing",personId,io,roll,faceRectangle);
+            faceServiceClient.addPersonFace(groupid,personId,io,roll,faceRectangle);
             calltraing("testing");
         } catch (ClientException e) {
             e.printStackTrace();

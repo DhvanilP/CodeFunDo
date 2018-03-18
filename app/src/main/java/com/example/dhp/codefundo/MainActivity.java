@@ -10,12 +10,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
@@ -41,57 +43,10 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
     private final int PICK_IMAGE = 1;
     ProgressDialog detectionProgressDialog;
     String groupid;
-    private Bitmap bitmap;
-    private String file_name;
     ImageView iv_attachment;
     Imageutils imageutils;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        imageutils = new Imageutils(this);
-        if (getIntent().hasExtra("groupId")) {
-            groupid = getIntent().getStringExtra("groupId");
-        }
-        detectionProgressDialog = new ProgressDialog(this);
-        detectionProgressDialog.setMessage("Creating person");
-        detectionProgressDialog.setCanceledOnTouchOutside(false);
-        faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-        iv_attachment = findViewById(R.id.imageViewAttach);
-        iv_attachment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageutils.imagepicker(1);
-            }
-        });
-//        createGroup("lol2");
-//        deleteGroup("lol");
-
-
-        Button browse = findViewById(R.id.browse);
-        Button createPerson = findViewById(R.id.createPerson);
-//        browse.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                gallIntent.setType("image/*");
-//                startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
-//                detectionProgressDialog.show();
-//
-//            }
-//        });
-        createPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreatePerson.class);
-                intent.putExtra("groupId", groupid);
-                startActivity(intent);
-            }
-        });
-
-    }
+    private Bitmap bitmap;
+    private String file_name;
 
     private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
         Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -146,25 +101,56 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
 
     }
 
-    // Detect faces by uploading face images
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            Uri uri = data.getData();
-//            try {
-//
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-//
-//                ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-//                imageView.setImageBitmap(bitmap);
-//                detectAndFrame(bitmap);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+        imageutils = new Imageutils(this);
+        if (getIntent().hasExtra("groupId")) {
+            groupid = getIntent().getStringExtra("groupId");
+            Log.d("print:",groupid);
+        }
+        detectionProgressDialog = new ProgressDialog(this);
+        detectionProgressDialog.setMessage("Creating person");
+        detectionProgressDialog.setCanceledOnTouchOutside(false);
+        faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
+        iv_attachment = findViewById(R.id.imageViewAttach);
+        iv_attachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageutils.imagepicker(1);
+            }
+        });
+
+        final Button Deleteperson = findViewById(R.id.deletePerson);
+        Deleteperson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),DeletePerson.class);
+                i.putExtra("groupId",groupid);
+                startActivity(i);
+            }
+        });
+
+        final Button deletegroup = findViewById(R.id.deleteGroup);
+        deletegroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteGroup(groupid);
+            }
+        });
+        Button createPerson = findViewById(R.id.createPerson);
+        createPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreatePerson.class);
+                intent.putExtra("groupId", groupid);
+                startActivity(intent);
+            }
+        });
+
+    }
 
     private void detectAndFrame(final Bitmap imageBitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -221,22 +207,19 @@ public class MainActivity extends AppCompatActivity implements Imageutils.ImageA
         detectTask.execute(inputStream);
     }
 
-    // Frame faces after detection
-
     private void deleteGroup(final String groupName) {
-        Thread background = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
-                    faceServiceClient.deletePersonGroup(groupName);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        background.start();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
+        StrictMode.setThreadPolicy(policy);
+        try {
+            faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
+            faceServiceClient.deletePersonGroup(groupName);
+            Toast.makeText(getApplicationContext(),"Group Has been deleted",Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(getApplicationContext(),HomePage.class);
+            startActivity(i);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
     }
 
     @Override
