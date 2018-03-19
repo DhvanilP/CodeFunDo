@@ -46,11 +46,27 @@ public class CreateGroup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 persongroupId = groupid.getText().toString().trim().replaceAll("\\s+", "");
-                Toast.makeText(getApplicationContext(), "Group created with name:" + persongroupId, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Group created with name:" + persongroupId, Toast.LENGTH_SHORT).show();
                 persongroupname = groupname.getText().toString().trim();
                 persongroupuserdata = groupuserdata.getText().toString().trim();
+                if (persongroupId.length() == 0) {
+                    groupid.setError("Any field is zero");
+                    groupid.requestFocus();
+                    return;
+                }
+                if (persongroupname.length() == 0) {
+                    groupname.setError("Ant field is zero");
+                    groupname.requestFocus();
+                    return;
+                }
+                if (persongroupuserdata.length() == 0) {
+                    groupuserdata.setError("Any field is zero");
+                    groupuserdata.requestFocus();
+                    return;
+                }
                 createGroup(persongroupId, persongroupname, persongroupuserdata);
                 createGroupDialog.show();
+
             }
         });
 
