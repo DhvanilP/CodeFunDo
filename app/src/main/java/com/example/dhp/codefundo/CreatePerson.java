@@ -1,7 +1,10 @@
 package com.example.dhp.codefundo;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -206,17 +209,55 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         detectionProgressDialog.show();
         detectionProgressDialog.setCanceledOnTouchOutside(false);
 
+        final String name = personName.getText().toString();
+        final String group = personGroup.getText().toString();
+        final String rollNumber = personroll.getText().toString();
 
-        String rollNumber = personroll.getText().toString();
+        if (name.length() == 0) {
+            personName.setError("This field can't be null");
+            personName.requestFocus();
+            return;
+        }
+        if (group.length() == 0) {
+            personGroup.setError("This field can't be null");
+            personGroup.requestFocus();
+            return;
+        }
+        if (rollNumber.length() == 0) {
+            personroll.setError("This field can't be null");
+            personroll.requestFocus();
+            return;
+        }
+        
         if (personsData.get(rollNumber) == null) {
             Thread background = new Thread() {
                 @Override
                 public void run() {
-                    String name = personName.getText().toString();
-                    String group = personGroup.getText().toString();
-                    String rollNumber = personroll.getText().toString();
                     try {
                         CreatePersonResult res = faceServiceClient.createPerson(group, name, rollNumber);
+                        AttendanceDbHelper attendanceDbHelper = new AttendanceDbHelper(getApplicationContext());
+                        SQLiteDatabase db = attendanceDbHelper.getWritableDatabase();
+//                        BatchEntry batchEntry = new BatchEntry(groupid);
+
+                        ContentValues values = new ContentValues();
+                        values.put(BatchEntry.rollNumber, rollNumber);
+                        values.put(BatchEntry.studentName, name);
+                        values.put(BatchEntry.markedAttendence, 0);
+                        values.put(BatchEntry.totalAttendence, 0);
+
+                        long newRowId = db.insert(groupid, null, values);
+                        db.close();
+
+                        SQLiteDatabase dbs = attendanceDbHelper.getReadableDatabase();
+                        String query = "select rollNumber from " + groupid;
+                        Cursor c = dbs.rawQuery(query, null);
+                        c.moveToFirst();
+                        while (!c.isAfterLast()) {
+                            Log.v("rollNumber ", c.getString(0));
+                            c.moveToNext();
+                        }
+                        dbs.close();
+
 //                        detectionProgressDialog.dismiss();
                         calladdface(res.personId, rollNumber);
 
@@ -228,7 +269,9 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
             };
             background.start();
         } else {
-            Toast.makeText(getApplicationContext(), "Person exists", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Person exists", Toast.LENGTH_SHORT).show();
+            personroll.setError("Roll Number exists");
+            personroll.requestFocus();
             detectionProgressDialog.dismiss();
         }
     }
