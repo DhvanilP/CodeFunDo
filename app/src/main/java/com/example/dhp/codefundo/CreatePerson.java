@@ -248,15 +248,15 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
                         long newRowId = db.insert(groupid, null, values);
                         db.close();
 
-                        SQLiteDatabase dbs = attendanceDbHelper.getReadableDatabase();
-                        String query = "select rollNumber from " + groupid;
-                        Cursor c = dbs.rawQuery(query, null);
-                        c.moveToFirst();
-                        while (!c.isAfterLast()) {
-                            Log.v("rollNumber ", c.getString(0));
-                            c.moveToNext();
-                        }
-                        dbs.close();
+//                        SQLiteDatabase dbs = attendanceDbHelper.getReadableDatabase();
+//                        String query = "select rollNumber from " + groupid;
+//                        Cursor c = dbs.rawQuery(query, null);
+//                        c.moveToFirst();
+//                        while (!c.isAfterLast()) {
+//                            Log.v("rollNumber ", c.getString(0));
+//                            c.moveToNext();
+//                        }
+//                        dbs.close();
 
 //                        detectionProgressDialog.dismiss();
                         calladdface(res.personId, rollNumber);

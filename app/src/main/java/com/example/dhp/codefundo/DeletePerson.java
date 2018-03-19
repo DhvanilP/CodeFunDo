@@ -1,6 +1,8 @@
 package com.example.dhp.codefundo;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -71,7 +73,25 @@ public class DeletePerson extends AppCompatActivity {
                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
                         StrictMode.setThreadPolicy(policy);
                 try {
+                    Person person = faceServiceClient.getPerson(groupid,personID[position]);
+                    AttendanceDbHelper attendanceDbHelper = new AttendanceDbHelper(getApplicationContext());
+                    SQLiteDatabase db = attendanceDbHelper.getWritableDatabase();
+                    String query = "delete from " + groupid + " where rollNumber=\"" + person.userData+"\"";
+                    db.execSQL(query);
+                    db.close();
+
+//                    SQLiteDatabase dbs = attendanceDbHelper.getReadableDatabase();
+//                    String query1 = "select rollNumber from " + groupid;
+//                    Cursor c = dbs.rawQuery(query1, null);
+//                    c.moveToFirst();
+//                    while (!c.isAfterLast()) {
+//                        Log.v("rollNumber ", c.getString(0));
+//                        c.moveToNext();
+//                    }
+//                    dbs.close();
+
                     faceServiceClient.deletePerson(groupid, personID[position]);
+
                     Toast.makeText(getApplicationContext(),"Person deleted",Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), PersonGroup.class);
                     i.putExtra("groupId", groupid);
