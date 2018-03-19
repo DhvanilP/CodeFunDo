@@ -42,8 +42,8 @@ public class CreateGroup extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                persongroupId = groupid.getText().toString().trim();
+                persongroupId = groupid.getText().toString().trim().replaceAll("\\s+", "");
+                Toast.makeText(getApplicationContext(), "Group created with name:" + persongroupId, Toast.LENGTH_SHORT).show();
                 persongroupname = groupname.getText().toString().trim();
                 persongroupuserdata = groupuserdata.getText().toString().trim();
                 createGroup(persongroupId, persongroupname, persongroupuserdata);
@@ -56,7 +56,7 @@ public class CreateGroup extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
     }
 
