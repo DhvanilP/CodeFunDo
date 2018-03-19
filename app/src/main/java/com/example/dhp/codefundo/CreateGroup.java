@@ -2,9 +2,12 @@ package com.example.dhp.codefundo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,6 +80,22 @@ public class CreateGroup extends AppCompatActivity {
 
             faceServiceClient.createPersonGroup(grpid, grpname, grpuserdata);
             Toast.makeText(getApplicationContext(), "Person Group has been created", Toast.LENGTH_SHORT).show();
+//            Log.v("Group id ",grpid);
+            BatchEntry batchEntry = new BatchEntry(grpid);
+            AttendanceDbHelper attendanceDbHelper = new AttendanceDbHelper(getApplicationContext());
+            SQLiteDatabase db = attendanceDbHelper.getWritableDatabase();
+            attendanceDbHelper.onCreate(db);
+            db.close();
+//            SQLiteDatabase dbs = attendanceDbHelper.getReadableDatabase();
+//            Cursor c = dbs.rawQuery("SELECT name FROM sqlite_master where type = 'table'",null);
+//            c.moveToFirst();
+//            while(!c.isAfterLast()){
+//                Log.v("table name ", c.getString(0));
+//                c.moveToNext();
+//            }
+//            dbs.close();
+//            Log.v("Table Created", "Table created");
+
             createGroupDialog.dismiss();
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);

@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -245,6 +247,21 @@ public class PersonGroup extends AppCompatActivity implements Imageutils.ImageAt
                                 try {
                                     faceServiceClient = new FaceServiceRestClient(SERVER_HOST, SUBSCRIPTION_KEY);
                                     faceServiceClient.deletePersonGroup(groupName);
+
+                                    String query = "drop table if exists " + groupid;
+                                    AttendanceDbHelper attendanceDbHelper = new AttendanceDbHelper(getApplicationContext());
+                                    SQLiteDatabase db = attendanceDbHelper.getWritableDatabase();
+                                    db.execSQL(query);
+                                    db.close();
+//                                    SQLiteDatabase dbs = attendanceDbHelper.getReadableDatabase();
+//                                    Cursor c = dbs.rawQuery("SELECT name FROM sqlite_master where type = 'table'",null);
+//                                    c.moveToFirst();
+//                                    while(!c.isAfterLast()){
+//                                        Log.v("table name ", c.getString(0));
+//                                        c.moveToNext();
+//                                    }
+//                                    dbs.close();
+
                                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(i);
                                 } catch (Exception e) {
