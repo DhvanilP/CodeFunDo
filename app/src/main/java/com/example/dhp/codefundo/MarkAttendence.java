@@ -19,10 +19,10 @@ public class MarkAttendence extends AppCompatActivity {
     ListView simpleList;
     UUID[] b;
     String groupid;
-    private String[] personnames, personrolls;
     String date;
     int[] mAttendance, tAttendance;
     String[] tStudentRoll;
+    private String[] personnames, personrolls;
 
     @Override
     public void onBackPressed() {
@@ -129,19 +129,6 @@ public class MarkAttendence extends AppCompatActivity {
                 }
                 Log.v("database check","marked attendence updated");
                 db3.close();
-
-                SQLiteDatabase dbz = attendanceDbHelper.getReadableDatabase();
-                for(int i = 0; i < tStudentRoll.length; i++)
-                {
-                    String queryz = "select markedAttendence, totalAttendence from " + groupid + " where rollNumber = \""+ tStudentRoll[i]+"\"";
-                    Cursor cz = dbz.rawQuery(queryz, null);
-                    cz.moveToFirst();
-                    while (!cz.isAfterLast()) {
-                        Log.v("Attendance ", cz.getInt(0) + "   " + cz.getInt(1));
-                        cz.moveToNext();
-                    }
-                }
-                dbz.close();
 
             }
         };
