@@ -1,8 +1,6 @@
 package com.example.dhp.codefundo;
 
-/**
- * Created by Suyash on 20-03-2018.
- */
+import com.example.dhp.codefundo.JSSEProvider;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -17,6 +15,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,8 +28,9 @@ public class GMailSender extends javax.mail.Authenticator {
     private String user;
     private String password;
     private Session session;
+    private Multipart multipart;
 
-    private Multipart _multipart = new MimeMultipart();
+
     static {
         Security.addProvider(new JSSEProvider());
     }
@@ -38,6 +38,7 @@ public class GMailSender extends javax.mail.Authenticator {
     public GMailSender(String user, String password) {
         this.user = user;
         this.password = password;
+
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.host", mailhost);
@@ -50,7 +51,9 @@ public class GMailSender extends javax.mail.Authenticator {
         props.setProperty("mail.smtp.quitwait", "false");
 
         session = Session.getDefaultInstance(props, this);
+
     }
+
 
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(user, password);
@@ -59,34 +62,19 @@ public class GMailSender extends javax.mail.Authenticator {
     public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
         try {
             MimeMessage message = new MimeMessage(session);
-            DataHandler handler = new DataHandler(new ByteArrayDataSource(
-                    body.getBytes(), "text/plain"));
+            DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
+            message.setContent(multipart);
             message.setSender(new InternetAddress(sender));
             message.setSubject(subject);
             message.setDataHandler(handler);
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setText(body);
-            _multipart.addBodyPart(messageBodyPart);
-
-            // Put parts in message
-            message.setContent(_multipart);
             if (recipients.indexOf(',') > 0)
-                message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse(recipients));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
             else
-                message.setRecipient(Message.RecipientType.TO,
-                        new InternetAddress(recipients));
+                message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
             Transport.send(message);
         } catch (Exception e) {
-        }
-    }
 
-    public void addAttachment(String filename) throws Exception {
-        BodyPart messageBodyPart = new MimeBodyPart();
-        DataSource source = new FileDataSource(filename);
-        messageBodyPart.setDataHandler(new DataHandler(source));
-        messageBodyPart.setFileName("download image");
-        _multipart.addBodyPart(messageBodyPart);
+        }
     }
 
     public class ByteArrayDataSource implements DataSource {
@@ -127,4 +115,19 @@ public class GMailSender extends javax.mail.Authenticator {
             throw new IOException("Not Supported");
         }
     }
+
+    public void addAttachment(String filename, String subject) throws Exception {
+        multipart = new MimeMultipart();
+        BodyPart messageBodyPart = new MimeBodyPart();
+        DataSource source = new FileDataSource(filename);
+        messageBodyPart.setDataHandler(new DataHandler(source));
+        messageBodyPart.setFileName(filename);
+        multipart.addBodyPart(messageBodyPart);
+
+        BodyPart messageBodyPart2 = new MimeBodyPart();
+        messageBodyPart2.setText(subject);
+        multipart.addBodyPart(messageBodyPart2);
+
+    }
+
 }
