@@ -47,7 +47,8 @@ public class MarkAttendence extends AppCompatActivity {
         mAttendance = new int[personrolls.length];
 
         date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        date = "March212018";
+        ReturnColumnName col = new ReturnColumnName(date);
+        date = col.returncolumn();
         Log.v("Date is: ", date);
         Thread th = new Thread() {
             @Override

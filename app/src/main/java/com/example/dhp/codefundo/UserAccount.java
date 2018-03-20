@@ -12,6 +12,7 @@ public class UserAccount extends AppCompatActivity {
     Button attendenceonParticularDay;
     Button specificPersonTotalattendence;
     Button personSpecificDayAttendence;
+    String ans="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
