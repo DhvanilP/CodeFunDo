@@ -3,7 +3,6 @@ package com.example.dhp.codefundo;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,7 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.dhp.codefundo.Imageutils.ImageAttachmentListener;
 import com.microsoft.projectoxford.face.FaceServiceClient;
@@ -228,7 +226,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
             personroll.requestFocus();
             return;
         }
-        
+
         if (personsData.get(rollNumber) == null) {
             Thread background = new Thread() {
                 @Override

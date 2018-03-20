@@ -13,4 +13,10 @@
         android:layout_centerInParent="true"
         android:text="Send Mail" />
 
+    <ImageView
+        android:id="@+id/imageViewEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ph_add_image"/>
+
 </RelativeLayout>
