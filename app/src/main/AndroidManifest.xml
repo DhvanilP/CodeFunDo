@@ -25,7 +25,8 @@
         <activity android:name=".CreateGroup" />
         <activity android:name=".DeletePerson" />
         <activity android:name=".MarkAttendence" />
-        <activity android:name=".UserAccount"></activity>
+        <activity android:name=".UserAccount" />
+        <activity android:name=".EmailActivity"></activity>
     </application>
 
 </manifest>
