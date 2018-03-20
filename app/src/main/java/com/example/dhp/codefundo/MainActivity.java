@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            Button ownaccount = findViewById(R.id.your_account);
+            ownaccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(),UserAccount.class);
+                    startActivity(i);
+                }
+            });
             AttendanceDbHelper helper = new AttendanceDbHelper(getApplicationContext());
             SQLiteDatabase dbs = helper.getReadableDatabase();
             Cursor c = dbs.rawQuery("SELECT count(name) FROM sqlite_master where type = 'table'",null);

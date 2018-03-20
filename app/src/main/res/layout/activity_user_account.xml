@@ -78,22 +78,6 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/buttonlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center|bottom"
-        android:padding="5dp">
-
-        <Button
-            android:id="@+id/create"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="Create "
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
 
 
 </LinearLayout>
