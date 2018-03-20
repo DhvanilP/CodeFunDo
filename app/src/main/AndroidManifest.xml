@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".CreateGroup" />
         <activity android:name=".DeletePerson" />
-        <activity android:name=".MarkAttendence"></activity>
+        <activity android:name=".MarkAttendence" />
+        <activity android:name=".UserAccount"></activity>
     </application>
 
 </manifest>

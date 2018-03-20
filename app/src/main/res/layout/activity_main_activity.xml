@@ -64,10 +64,23 @@
         android:layout_below="@id/separatorlayout"
         android:gravity="center"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/your_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="Your Account"
+            android:textColor="#FFFFFF" />
+
         <Button
             android:id="@+id/createPersongroup"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="2"
             android:background="@color/colorPrimary"
             android:text="Create New Person Group"
             android:textColor="#FFFFFF" />
