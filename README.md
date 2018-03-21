@@ -21,6 +21,13 @@ time and solving problems like proxy that are given by students.
 This project can be further extended to far over the boundaries in order to make the 
 india digitalised and not only in classrooms but also in offices and in other departments
 
+## Future Works
+
+Here we have made an android app, in future we can use this in integration with video instead of 
+images and then marked the attendance according to it, and with that we can keep track of the presence
+of the person in real-time not only in schools or institution but also in offices.
+
+
 ## Releases
 You can check out the Releases(Google Drive) [here](https://drive.google.com/file/d/1NXgSUBAWxkVuebiKwPY8T_G4Rg8Ay1Pi/view).
 
