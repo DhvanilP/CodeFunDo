@@ -38,6 +38,7 @@
         <activity android:name=".SpecificPersonTA" />
         <activity android:name=".SpecificDayGroupAttendence" />
         <activity android:name=".EmailActivity"/>
+        <activity android:name=".AboutActivity"/>
     </application>
 
 </manifest>
