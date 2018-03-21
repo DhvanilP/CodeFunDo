@@ -17,6 +17,9 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -168,6 +171,7 @@ public class PersonGroup extends AppCompatActivity implements Imageutils.ImageAt
             }
         });
         Button createPerson = findViewById(R.id.createPerson);
+
         createPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,6 +181,22 @@ public class PersonGroup extends AppCompatActivity implements Imageutils.ImageAt
             }
         });
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.post_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.email:
+                startActivity(new Intent(this, EmailActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void detectAndFrame(final Bitmap imageBitmap) {

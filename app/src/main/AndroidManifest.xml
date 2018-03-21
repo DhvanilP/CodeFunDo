@@ -31,7 +31,8 @@
         <activity android:name=".DeletePerson" />
         <activity android:name=".MarkAttendence" />
         <activity android:name=".UserAccount" />
-        <activity android:name=".EmailActivity" />
+        <activity android:name=".EmailActivity"
+            android:parentActivityName=".PersonGroup"/>
         <activity android:name=".BatchEntry$WelcomeActivity" />
         <activity android:name=".TotalGroupAttendence"></activity>
     </application>

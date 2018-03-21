@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.dhp.codefundo.Imageutils.ImageAttachmentListener;
 import com.microsoft.projectoxford.face.FaceServiceClient;
@@ -48,15 +49,22 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
     HashMap<String, Person> personsData;
     Person[] persons;
     Face[] result;
-    ImageView image;
+    static ImageView image;
     InputStream io;
     Imageutils imageutils;
     String groupid;
     private Bitmap bitmap;
     private String file_name;
     private FaceServiceClient faceServiceClient;
+    static int isDetected = 2;
 
     private static Bitmap drawFaceRectanglesOnBitmap(Bitmap originalBitmap, Face[] faces) {
+        Log.v("FACES:", faces.length + "");
+        if(faces.length == 0)
+        {
+            isDetected = 0;
+            image.setTag("None");
+        }
         Bitmap bitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
@@ -76,6 +84,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
                         paint);
             }
         }
+        image.setTag("Final");
         return bitmap;
     }
 
@@ -101,6 +110,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         faceServiceClient = new FaceServiceRestClient(PersonGroup.SERVER_HOST, PersonGroup.SUBSCRIPTION_KEY);
 
         image = findViewById(R.id.image);
+        image.setTag("Initial");
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,9 +146,9 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         submitPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
                     createPerson();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -164,14 +174,18 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
                             null           // returnFaceAttributes: a string like "age, gender"
                     );
                     if (result == null) {
+                        isDetected = 0;
                         publishProgress("Detection Finished. Nothing detected");
                         return null;
+                    } else {
+                        Log.v("Face detected", "Face detected");
+                        publishProgress(
+                                String.format("Detection Finished. %d face(s) detected",
+                                        result.length));
+                        return result;
                     }
-                    publishProgress(
-                            String.format("Detection Finished. %d face(s) detected",
-                                    result.length));
-                    return result;
                 } catch (Exception e) {
+                    isDetected = 0;
                     publishProgress("Detection failed");
                     return null;
                 }
@@ -194,7 +208,11 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
             protected void onPostExecute(Face[] result) {
                 //TODO: update face frames
                 detectionProgressDialog.dismiss();
-                if (result == null) return;
+                if (result == null){
+                    isDetected = 0;
+                    Log.v("OnPostExecute", "OnPostDetected");
+                    return;
+                }
                 image.setImageBitmap(drawFaceRectanglesOnBitmap(imageBitmap, result));
             }
         };
@@ -212,18 +230,33 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         final String rollNumber = personroll.getText().toString();
 
         if (name.length() == 0) {
+            detectionProgressDialog.dismiss();
             personName.setError("This field can't be null");
             personName.requestFocus();
             return;
         }
         if (group.length() == 0) {
+            detectionProgressDialog.dismiss();
             personGroup.setError("This field can't be null");
             personGroup.requestFocus();
             return;
         }
         if (rollNumber.length() == 0) {
+            detectionProgressDialog.dismiss();
             personroll.setError("This field can't be null");
             personroll.requestFocus();
+            return;
+        }
+
+        if (image.getTag() == "Initial") {
+            detectionProgressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "Select an Image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (isDetected == 0) {
+            detectionProgressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "No face detected", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -282,8 +315,10 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         try {
             faceServiceClient.addPersonFace(groupid, personId, io, roll, faceRectangle);
             calltraing(groupid);
+            detectionProgressDialog.dismiss();
         } catch (Exception e) {
             e.printStackTrace();
+            detectionProgressDialog.dismiss();
         }
     }
 

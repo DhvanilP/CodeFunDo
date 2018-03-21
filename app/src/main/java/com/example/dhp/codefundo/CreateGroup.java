@@ -29,6 +29,7 @@ public class CreateGroup extends AppCompatActivity {
     EditText groupid;
     EditText groupname;
     EditText groupuserdata;
+    int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,27 +68,11 @@ public class CreateGroup extends AppCompatActivity {
                 }
                 createGroup(persongroupId, persongroupname, persongroupuserdata);
                 createGroupDialog.show();
-
+                if(flag == 1)
+                    createGroupDialog.dismiss();
             }
         });
 
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.post_menu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.email:
-                startActivity(new Intent(this, EmailActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override
@@ -105,9 +90,10 @@ public class CreateGroup extends AppCompatActivity {
             PersonGroup[] all_person_groups = faceServiceClient.getPersonGroups();
             for (PersonGroup p : all_person_groups) {
                 if (p.personGroupId.equals(grpid)) {
+                    createGroupDialog.dismiss();
                     groupid.setError("This group already exist");
                     groupid.requestFocus();
-                    createGroupDialog.dismiss();
+                    flag = 1;
                     return;
                 }
             }
