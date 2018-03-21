@@ -57,12 +57,12 @@ public class EmailActivity extends Activity implements Imageutils.ImageAttachmen
 //                        Toast.makeText(getApplicationContext(), "Image found", Toast.LENGTH_LONG).show();
 //                        imageView.setImageBitmap(myBitmap);
 //                    }
-                    sender.addAttachment(pathOfImage, "Try");
+                    sender.addAttachment(pathOfImage, "Test mail");
                     sender.sendMail("Test mail", "This mail has been sent from android app along with attachment",
                             "cfdwhitewalkers@gmail.com",
-                            "dhvanilhparikh@gmail.com");
+                            "suyashghuge@gmail.com");
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
 
             }
