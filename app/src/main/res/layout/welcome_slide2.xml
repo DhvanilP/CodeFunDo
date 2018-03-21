@@ -9,13 +9,14 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
-        android:padding="5dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add persons"
             android:padding="45dp"
+            android:text="Add persons"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
@@ -24,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="250dp"
             android:src="@drawable/person" />
-
 
 
         <TextView

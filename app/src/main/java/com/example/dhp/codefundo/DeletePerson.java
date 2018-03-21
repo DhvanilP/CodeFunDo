@@ -1,7 +1,6 @@
 package com.example.dhp.codefundo;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -70,13 +69,13 @@ public class DeletePerson extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position,
                                     long id) {
 
-                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
-                        StrictMode.setThreadPolicy(policy);
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build();
+                StrictMode.setThreadPolicy(policy);
                 try {
-                    Person person = faceServiceClient.getPerson(groupid,personID[position]);
+                    Person person = faceServiceClient.getPerson(groupid, personID[position]);
                     AttendanceDbHelper attendanceDbHelper = new AttendanceDbHelper(getApplicationContext());
                     SQLiteDatabase db = attendanceDbHelper.getWritableDatabase();
-                    String query = "delete from " + groupid + " where rollNumber=\"" + person.userData+"\"";
+                    String query = "delete from " + groupid + " where rollNumber=\"" + person.userData + "\"";
                     db.execSQL(query);
                     db.close();
 
@@ -92,7 +91,7 @@ public class DeletePerson extends AppCompatActivity {
 
                     faceServiceClient.deletePerson(groupid, personID[position]);
 
-                    Toast.makeText(getApplicationContext(),"Person deleted",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Person deleted", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), PersonGroup.class);
                     i.putExtra("groupId", groupid);
                     startActivity(i);

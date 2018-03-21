@@ -1,6 +1,11 @@
 package com.example.dhp.codefundo;
 
-import com.example.dhp.codefundo.JSSEProvider;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.Security;
+import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -16,24 +21,16 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.Security;
-import java.util.Properties;
-
 public class GMailSender extends javax.mail.Authenticator {
+    static {
+        Security.addProvider(new JSSEProvider());
+    }
+
     private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
     private Session session;
     private Multipart multipart;
-
-
-    static {
-        Security.addProvider(new JSSEProvider());
-    }
 
     public GMailSender(String user, String password) {
         this.user = user;
@@ -77,6 +74,20 @@ public class GMailSender extends javax.mail.Authenticator {
         }
     }
 
+    public void addAttachment(String filename, String subject) throws Exception {
+        multipart = new MimeMultipart();
+        BodyPart messageBodyPart = new MimeBodyPart();
+        DataSource source = new FileDataSource(filename);
+        messageBodyPart.setDataHandler(new DataHandler(source));
+        messageBodyPart.setFileName(filename);
+        multipart.addBodyPart(messageBodyPart);
+
+        BodyPart messageBodyPart2 = new MimeBodyPart();
+        messageBodyPart2.setText(subject);
+        multipart.addBodyPart(messageBodyPart2);
+
+    }
+
     public class ByteArrayDataSource implements DataSource {
         private byte[] data;
         private String type;
@@ -114,20 +125,6 @@ public class GMailSender extends javax.mail.Authenticator {
         public OutputStream getOutputStream() throws IOException {
             throw new IOException("Not Supported");
         }
-    }
-
-    public void addAttachment(String filename, String subject) throws Exception {
-        multipart = new MimeMultipart();
-        BodyPart messageBodyPart = new MimeBodyPart();
-        DataSource source = new FileDataSource(filename);
-        messageBodyPart.setDataHandler(new DataHandler(source));
-        messageBodyPart.setFileName(filename);
-        multipart.addBodyPart(messageBodyPart);
-
-        BodyPart messageBodyPart2 = new MimeBodyPart();
-        messageBodyPart2.setText(subject);
-        multipart.addBodyPart(messageBodyPart2);
-
     }
 
 }

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_activity);
 
         a = new String[1000000];
-        b= new String[1000000];
+        b = new String[1000000];
 
         boolean state = isNetworkAvailable();
         if (state) {
@@ -49,27 +49,27 @@ public class MainActivity extends AppCompatActivity {
             ownaccount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getApplicationContext(),UserAccount.class);
+                    Intent i = new Intent(getApplicationContext(), UserAccount.class);
                     startActivity(i);
                 }
             });
             AttendanceDbHelper helper = new AttendanceDbHelper(getApplicationContext());
             SQLiteDatabase dbs = helper.getReadableDatabase();
-            Cursor c = dbs.rawQuery("SELECT count(name) FROM sqlite_master where type = 'table'",null);
+            Cursor c = dbs.rawQuery("SELECT count(name) FROM sqlite_master where type = 'table'", null);
             c.moveToFirst();
             int counted = c.getInt(0);
-            Log.v("Counted",counted+"");
-            a = new String[counted-1];
-            b= new String[counted-1];
+            Log.v("Counted", counted + "");
+            a = new String[counted - 1];
+            b = new String[counted - 1];
 
-            Cursor c1 = dbs.rawQuery("SELECT name FROM sqlite_master where type = 'table'",null);
+            Cursor c1 = dbs.rawQuery("SELECT name FROM sqlite_master where type = 'table'", null);
             c1.moveToFirst();
-            int i=0;
-            while(!c1.isAfterLast()){
-                if(!c1.getString(0).equals("android_metadata"))
-                {   a[i] = (i+1)+".) " + c1.getString(0);
+            int i = 0;
+            while (!c1.isAfterLast()) {
+                if (!c1.getString(0).equals("android_metadata")) {
+                    a[i] = (i + 1) + ".) " + c1.getString(0);
                     b[i] = c1.getString(0).trim();
-                    Log.v("name",c1.getString(0));
+                    Log.v("name", c1.getString(0));
                     i++;
                 }
                 c1.moveToNext();

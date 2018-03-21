@@ -14,7 +14,9 @@ import android.util.Log;
  */
 public class AttendanceDbHelper extends SQLiteOpenHelper {
 
-    /** Name of the database file */
+    /**
+     * Name of the database file
+     */
     private static final String DATABASE_NAME = "AttendenceMarker.db";
     /**
      * Database version. If you change the database schema, you must increment the database version.
@@ -40,16 +42,16 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 //        Log.v("Batch table name", BatchEntry.TABLE_NAME);
         // Create a String that contains the SQL statement to create the pets table
-        if(BatchEntry.TABLE_NAME!=null){
-            SQL_CREATE_PETS_TABLE =  "CREATE TABLE " + BatchEntry.TABLE_NAME + " ("
+        if (BatchEntry.TABLE_NAME != null) {
+            SQL_CREATE_PETS_TABLE = "CREATE TABLE " + BatchEntry.TABLE_NAME + " ("
                     + BatchEntry.rollNumber + " TEXT PRIMARY KEY, "
                     + BatchEntry.studentName + " TEXT NOT NULL, "
                     + BatchEntry.markedAttendence + " INTEGER, "
                     + BatchEntry.totalAttendence + " INTEGER);";
-             db.execSQL(SQL_CREATE_PETS_TABLE);
+            db.execSQL(SQL_CREATE_PETS_TABLE);
             Log.v("AttendanceDbHelper", "Table created");
         }
-       Log.v("Passed","table name is null");
+        Log.v("Passed", "table name is null");
     }
 
     /**

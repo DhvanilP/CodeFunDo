@@ -22,33 +22,30 @@
             android:text="ADD PERSON"
             android:textColor="#000000"
             android:textSize="30dp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/personGroup"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="3dp"
-        android:background="@color/transparent"
-        android:hint="Enter group name"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:textStyle="italic"
-        />
+        <EditText
+            android:id="@+id/personGroup"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:background="@color/transparent"
+            android:hint="Enter group name"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="italic" />
 
 
-    <EditText
-        android:id="@+id/personName"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="3dp"
-        android:background="@color/transparent"
-        android:hint="Enter name"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:textStyle="italic"
-        />
+        <EditText
+            android:id="@+id/personName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:background="@color/transparent"
+            android:hint="Enter name"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/personRoll"
@@ -59,8 +56,7 @@
             android:hint="Enter Roll Number"
             android:textColor="#000000"
             android:textSize="20dp"
-            android:textStyle="italic"
-            />
+            android:textStyle="italic" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
+
         <Button
             android:id="@+id/createPerson"
             android:layout_width="match_parent"

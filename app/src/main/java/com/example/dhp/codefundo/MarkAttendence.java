@@ -59,16 +59,16 @@ public class MarkAttendence extends AppCompatActivity {
                 SQLiteDatabase db2 = attendanceDbHelper.getWritableDatabase();
                 Cursor c = db2.rawQuery("select * from " + groupid + " limit 0", null);
                 Log.v("Thread start", "Start?");
-                int checking=0;
+                int checking = 0;
                 if (c.getColumnIndex(date) == -1) {
                     String query1 = "alter table " + groupid + " add column \"" + date + "\" INTEGER";
                     db2.execSQL(query1);
                     Log.v("database check", "column created");
-                    checking=1;
+                    checking = 1;
                 }
                 db2.close();
                 SQLiteDatabase dbx = attendanceDbHelper.getReadableDatabase();
-                if(checking==1){
+                if (checking == 1) {
                     String query2 = "select count(*) from " + groupid;
                     Cursor c2 = dbx.rawQuery(query2, null);
                     c2.moveToFirst();
@@ -76,7 +76,7 @@ public class MarkAttendence extends AppCompatActivity {
                         counttotal = c2.getInt(0);
                         c2.moveToNext();
                     }
-                    Log.v("database check",counttotal+"");
+                    Log.v("database check", counttotal + "");
                     tAttendance = new int[counttotal];
                     tStudentRoll = new String[counttotal];
                     String query3 = "select rollNumber, totalAttendence from " + groupid;
@@ -89,7 +89,7 @@ public class MarkAttendence extends AppCompatActivity {
                         i++;
                         c3.moveToNext();
                     }
-                    Log.v("database check","total roll and attendence find");
+                    Log.v("database check", "total roll and attendence find");
                 }
                 Log.v("Thread start", "Start?");
 
@@ -102,7 +102,7 @@ public class MarkAttendence extends AppCompatActivity {
                         c4.moveToNext();
                     }
                 }
-                Log.v("database check","getting marked attendence");
+                Log.v("database check", "getting marked attendence");
                 dbx.close();
 
                 SQLiteDatabase db3 = attendanceDbHelper.getWritableDatabase();
@@ -114,11 +114,11 @@ public class MarkAttendence extends AppCompatActivity {
                         db3.update(groupid, values, "rollNumber = \"" + tStudentRoll[i] + "\"", null);
                     }
                 }
-                Log.v("database check","total attendence updated");
+                Log.v("database check", "total attendence updated");
 
                 for (int i = 0; i < personrolls.length; i++) {
                     ContentValues values1 = new ContentValues();
-                    String query5 = "select "+date +" from " + groupid + " where rollNumber = \"" + personrolls[i] + "\"";
+                    String query5 = "select " + date + " from " + groupid + " where rollNumber = \"" + personrolls[i] + "\"";
                     Cursor c5 = db3.rawQuery(query5, null);
                     c5.moveToFirst();
                     int flag = c5.getInt(0);
@@ -128,7 +128,7 @@ public class MarkAttendence extends AppCompatActivity {
                         db3.update(groupid, values1, "rollNumber = \"" + personrolls[i] + "\"", null);
                     }
                 }
-                Log.v("database check","marked attendence updated");
+                Log.v("database check", "marked attendence updated");
                 db3.close();
 
             }

@@ -47,8 +47,7 @@
             android:layout_margin="5dp"
             android:background="@color/colorPrimary"
             android:text="Total Attendence marked of group "
-            android:textColor="#FFFFFF"
-            />
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/getspecificday"
@@ -67,6 +66,7 @@
             android:background="@color/colorPrimary"
             android:text="specific person attendence on particular day "
             android:textColor="#FFFFFF" />
+
         <Button
             android:id="@+id/getspecificPersonTotal"
             android:layout_width="match_parent"
@@ -76,8 +76,6 @@
             android:text="Total attendence of specific person"
             android:textColor="#FFFFFF" />
     </LinearLayout>
-
-
 
 
 </LinearLayout>

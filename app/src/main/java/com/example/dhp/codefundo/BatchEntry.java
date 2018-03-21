@@ -12,15 +12,11 @@ import android.support.v7.app.AppCompatActivity;
  */
 public final class BatchEntry {
 
-    public static String TABLE_NAME;
-
     public final static String rollNumber = "rollNumber";
-
     public final static String studentName = "studentName";
-
     public final static String markedAttendence = "markedAttendence";
-
     public final static String totalAttendence = "totalAttendence";
+    public static String TABLE_NAME;
 
 
     // To prevent someone from accidentally instantiating the contract class,

@@ -12,14 +12,14 @@ public class UserAccount extends AppCompatActivity {
     Button attendenceonParticularDay;
     Button specificPersonTotalattendence;
     Button personSpecificDayAttendence;
-    String ans="";
+    String ans = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_account);
 
-        totalGroupAttendence=findViewById(R.id.getTotalstats);
+        totalGroupAttendence = findViewById(R.id.getTotalstats);
         attendenceonParticularDay = findViewById(R.id.getspecificday);
         specificPersonTotalattendence = findViewById(R.id.getspecificPersonTotal);
         personSpecificDayAttendence = findViewById(R.id.getspecificPerson);
@@ -57,7 +57,7 @@ public class UserAccount extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
     }
 }
