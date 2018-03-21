@@ -34,9 +34,6 @@ public class TotalGroupAttendence extends AppCompatActivity {
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
 
 
-
-
-
                 Cursor cx = db.rawQuery("SELECT count(name) FROM sqlite_master where type = 'table'",null);
                 cx.moveToFirst();
                 int counted = cx.getInt(0);

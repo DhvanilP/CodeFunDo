@@ -67,6 +67,7 @@ public class MarkAttendence extends AppCompatActivity {
                     checking = 1;
                 }
                 db2.close();
+
                 SQLiteDatabase dbx = attendanceDbHelper.getReadableDatabase();
                 if (checking == 1) {
                     String query2 = "select count(*) from " + groupid;
@@ -79,7 +80,7 @@ public class MarkAttendence extends AppCompatActivity {
                     Log.v("database check", counttotal + "");
                     tAttendance = new int[counttotal];
                     tStudentRoll = new String[counttotal];
-                    String query3 = "select rollNumber, totalAttendence from " + groupid;
+                    String query3 = "select rollNumber,totalAttendence from " + groupid;
                     Cursor c3 = dbx.rawQuery(query3, null);
                     c3.moveToFirst();
                     int i = 0;
@@ -88,8 +89,8 @@ public class MarkAttendence extends AppCompatActivity {
                         tAttendance[i] = c3.getInt(1);
                         i++;
                         c3.moveToNext();
+                        Log.v("database check", "total roll and attendence find");
                     }
-                    Log.v("database check", "total roll and attendence find");
                 }
                 Log.v("Thread start", "Start?");
 
@@ -112,9 +113,9 @@ public class MarkAttendence extends AppCompatActivity {
                         values.put(BatchEntry.totalAttendence, tAttendance[i] + 1);
                         values.put(date, 0);
                         db3.update(groupid, values, "rollNumber = \"" + tStudentRoll[i] + "\"", null);
+                        Log.v("database check", "total attendence updated");
                     }
                 }
-                Log.v("database check", "total attendence updated");
 
                 for (int i = 0; i < personrolls.length; i++) {
                     ContentValues values1 = new ContentValues();

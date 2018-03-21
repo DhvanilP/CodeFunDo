@@ -34,7 +34,10 @@
         <activity android:name=".UserAccount" />
         <activity android:name=".BatchEntry$WelcomeActivity" />
         <activity android:name=".TotalGroupAttendence" />
-        <activity android:name=".EmailActivity"></activity>
+        <activity android:name=".PersonSpecificDayAttendence" />
+        <activity android:name=".SpecificPersonTA" />
+        <activity android:name=".SpecificDayGroupAttendence" />
+        <activity android:name=".EmailActivity"/>
     </application>
 
 </manifest>
