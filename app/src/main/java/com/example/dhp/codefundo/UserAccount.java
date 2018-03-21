@@ -35,7 +35,8 @@ public class UserAccount extends AppCompatActivity {
         attendenceonParticularDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(),SpecificDayGroupAttendence.class);
+                startActivity(i);
             }
         });
 
