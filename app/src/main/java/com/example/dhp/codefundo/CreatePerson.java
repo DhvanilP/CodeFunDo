@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +54,8 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
     InputStream io;
     Imageutils imageutils;
     String groupid;
+    String emailadd;
+    EditText emailidstudent;
     private Bitmap bitmap;
     private String file_name;
     private FaceServiceClient faceServiceClient;
@@ -105,6 +108,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         personGroup = findViewById(R.id.personGroup);
         personroll = findViewById(R.id.personRoll);
         personsData = new HashMap<>();
+        emailidstudent = findViewById(R.id.emailaddress);
         personGroup.setText(groupid);
         personGroup.setEnabled(false);
         faceServiceClient = new FaceServiceRestClient(PersonGroup.SERVER_HOST, PersonGroup.SUBSCRIPTION_KEY);
@@ -174,7 +178,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
                             null           // returnFaceAttributes: a string like "age, gender"
                     );
                     if (result == null) {
-                        isDetected = 0;
+//                        isDetected = 0;
                         publishProgress("Detection Finished. Nothing detected");
                         return null;
                     } else {
@@ -185,7 +189,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
                         return result;
                     }
                 } catch (Exception e) {
-                    isDetected = 0;
+//                    isDetected = 0;
                     publishProgress("Detection failed");
                     return null;
                 }
@@ -209,7 +213,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
                 //TODO: update face frames
                 detectionProgressDialog.dismiss();
                 if (result == null){
-                    isDetected = 0;
+//                    isDetected = 0;
                     Log.v("OnPostExecute", "OnPostDetected");
                     return;
                 }
@@ -228,23 +232,34 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
         final String name = personName.getText().toString();
         final String group = personGroup.getText().toString();
         final String rollNumber = personroll.getText().toString();
+        emailadd = emailidstudent.getText().toString();
 
         if (name.length() == 0) {
             detectionProgressDialog.dismiss();
             personName.setError("This field can't be null");
             personName.requestFocus();
+            detectionProgressDialog.dismiss();
             return;
         }
         if (group.length() == 0) {
             detectionProgressDialog.dismiss();
             personGroup.setError("This field can't be null");
             personGroup.requestFocus();
+            detectionProgressDialog.dismiss();
             return;
         }
         if (rollNumber.length() == 0) {
             detectionProgressDialog.dismiss();
             personroll.setError("This field can't be null");
             personroll.requestFocus();
+            detectionProgressDialog.dismiss();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailadd).matches()) {
+            emailidstudent.setError("Enter  a valid email id");
+            emailidstudent.requestFocus();
+            detectionProgressDialog.dismiss();
             return;
         }
 
@@ -273,6 +288,7 @@ public class CreatePerson extends AppCompatActivity implements ImageAttachmentLi
                         ContentValues values = new ContentValues();
                         values.put(BatchEntry.rollNumber, rollNumber);
                         values.put(BatchEntry.studentName, name);
+                        values.put(BatchEntry.emailAddress,emailadd);
                         values.put(BatchEntry.markedAttendence, 0);
                         values.put(BatchEntry.totalAttendence, 0);
 
