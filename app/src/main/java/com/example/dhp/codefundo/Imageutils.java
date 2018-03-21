@@ -596,7 +596,7 @@ public class Imageutils {
                         // Log.i("selected","path"+selected_path);
                         file_name = selected_path.substring(selected_path.lastIndexOf("/") + 1);
                         // Log.i("file","seller_name"+file_name);
-                        bitmap = compressImage(imageUri.toString(), 81, 61);
+                        bitmap = compressImage(imageUri.toString(), 811, 611);
                         imageAttachment_callBack.image_attachment(from, file_name, bitmap, imageUri);
                     } catch (Exception e) {
                         e.printStackTrace();

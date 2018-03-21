@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity);
 
-        a = new String[1000000];
-        b = new String[1000000];
-
         boolean state = isNetworkAvailable();
         if (state) {
             final Button createperson = (Button) findViewById(R.id.createPersongroup);
