@@ -4,7 +4,8 @@ package com.example.dhp.codefundo;
  * Created by Suyash on 19-03-2018.
  */
 
-import android.provider.BaseColumns;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * API Contract for the Pets app.
@@ -29,5 +30,13 @@ public final class BatchEntry {
     }
 
 
+    public static class WelcomeActivity extends AppCompatActivity {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_welcome);
+        }
+    }
 }
 
