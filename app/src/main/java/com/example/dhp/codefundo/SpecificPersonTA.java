@@ -126,8 +126,6 @@ public class SpecificPersonTA extends AppCompatActivity {
                     personrollno.requestFocus();
                     return;
                 }
-
-
                 db.close();
             }
         });

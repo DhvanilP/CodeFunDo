@@ -11,30 +11,34 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.Toast;
 
-public class SpecificDayGroupAttendence extends AppCompatActivity {
+public class PersonSpecificDayAttendence extends AppCompatActivity {
 
 
     EditText groupid;
-    String rollnumber[];
+    String rollnumbers[];
     String ma[];
     String ta[];
-    EditText datetext;
+    EditText personrollno;
+    EditText datefield;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_specific_day_group_attendence);
+        setContentView(R.layout.activity_person_specific_day_attendence);
 
         groupid =findViewById(R.id.groupid);
-        datetext=findViewById(R.id.date);
+        datefield=findViewById(R.id.date);
+        personrollno = findViewById(R.id.personrollnumber);
         Button submit = findViewById(R.id.submitbutton);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = groupid.getText().toString().trim();
-                String findday = datetext.getText().toString().trim();
+                String findday = datefield.getText().toString().trim();
+                String finalpersonroll = personrollno.getText().toString().trim();
                 ReturnColumnName rcn = new ReturnColumnName(findday);
                 findday = rcn.returncolumn();
 
@@ -78,41 +82,55 @@ public class SpecificDayGroupAttendence extends AppCompatActivity {
                 if (cyz.getColumnIndex(findday) != -1) {
 
 
-                    String query = "select rollNumber," + findday + " from " + name;
-
+                    String query = "select rollNumber from " + name;
                     String query2 = "select count(*) from " + name;
                     Cursor c1 = db.rawQuery(query2, null);
                     c1.moveToFirst();
                     int count = c1.getInt(0);
                     Log.v("countoftotalstudents", count + "");
-                    rollnumber = new String[count];
-                    ma = new String[count];
-                    ta = new String[count];
+                    rollnumbers = new String[count];
                     Cursor c = db.rawQuery(query, null);
                     c.moveToFirst();
                     int w = 0;
+                    int flage = 0;
                     while (!c.isAfterLast()) {
-                        rollnumber[w] = c.getString(0);
-                        ma[w] = c.getInt(1) + "";
+                        rollnumbers[w] = c.getString(0);
+                        if (rollnumbers[w].equals(finalpersonroll)) {
+                            flage = 1;
+                            break;
+                        }
                         w++;
                         Log.v("Rollnumber", c.getString(0));
                         c.moveToNext();
                     }
 
-                    ListView rollnumber2 = findViewById(R.id.roll_listview);
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.total_attendence_textview, R.id.typetext, rollnumber);
-                    rollnumber2.setAdapter(arrayAdapter);
+                    if (flage == 1) {
+
+                        String querytstudentdetails = "select "+findday+" from "+name+" where rollNumber = \""+finalpersonroll+"\"";
+                        Cursor cursorstudentdetails =db.rawQuery(querytstudentdetails,null);
+                        cursorstudentdetails.moveToFirst();
+                        ma = new String[1];
+                        ma[0]=cursorstudentdetails.getInt(0)+"";
+                        String[] rollnumbertodisplay = new String[1];
+                        rollnumbertodisplay[0]=finalpersonroll;
+
+                        ListView rollnumber2 = findViewById(R.id.roll_listview);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.total_attendence_textview, R.id.typetext, rollnumbertodisplay);
+                        rollnumber2.setAdapter(arrayAdapter);
 
 
-                    ListView markedattendence = findViewById(R.id.ma_listview);
-                    ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.total_attendence_textview, R.id.typetext, ma);
-                    markedattendence.setAdapter(arrayAdapter2);
+                        ListView markedattendence = findViewById(R.id.ma_listview);
+                        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.total_attendence_textview, R.id.typetext, ma);
+                        markedattendence.setAdapter(arrayAdapter2);
 //
 //                ListView totalattendence = findViewById(R.id.ta_listview);
 //                ArrayAdapter<String> arrayAdapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.total_attendence_textview, R.id.typetext, ta);
 //                totalattendence.setAdapter(arrayAdapter3);
-                }
-                else{
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No such Roll number exists", Toast.LENGTH_SHORT).show();
+                    }
+                } else{
                     Toast.makeText(getApplicationContext(),"NO records on such date is present",Toast.LENGTH_SHORT).show();
                 }
                 db.close();

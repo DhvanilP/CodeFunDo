@@ -51,7 +51,8 @@ public class UserAccount extends AppCompatActivity {
         personSpecificDayAttendence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(),PersonSpecificDayAttendence.class);
+                startActivity(i);
             }
         });
 

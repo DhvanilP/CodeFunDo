@@ -35,7 +35,8 @@
         <activity android:name=".BatchEntry$WelcomeActivity" />
         <activity android:name=".TotalGroupAttendence" />
         <activity android:name=".SpecificDayGroupAttendence" />
-        <activity android:name=".SpecificPersonTA"></activity>
+        <activity android:name=".SpecificPersonTA" />
+        <activity android:name=".PersonSpecificDayAttendence"></activity>
     </application>
 
 </manifest>
