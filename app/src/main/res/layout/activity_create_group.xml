@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Enter personGroupId :"
+            android:text="Enter Group Name :"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:hint="person group Id"
+            android:hint="Group Name"
             android:textColor="#FFFFFF"
             android:textColorHint="@color/textColorHint" />
         <View
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Enter personGroup name :"
+            android:text="Enter Username :"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -83,7 +83,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textColorHint="@color/textColorHint"
-            android:hint="person group name"
+            android:hint="username"
             android:textColor="#FFFFFF" />
         <View
             android:layout_width="match_parent"
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Enter personGroup user-data:"
+            android:text="Enter Group Data:"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -108,7 +108,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textColorHint="@color/textColorHint"
-            android:hint="person group user-data"
+            android:hint="Description"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>
