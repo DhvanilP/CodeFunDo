@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFF66"
+    android:background="@drawable/back_image2"
     android:orientation="vertical"
-    android:padding="5dp"
+    android:padding="12dp"
     tools:context="com.example.dhp.codefundo.MainActivity">
 
 
@@ -13,7 +13,6 @@
         android:id="@+id/spacing"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@+id/top"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -23,7 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Delete Person"
-            android:textColor="#000000"
+            android:textColor="@color/white"
             android:textSize="40dp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -35,7 +34,6 @@
         android:layout_height="0dp"
         android:layout_below="@+id/spacing"
         android:layout_weight="6"
-        android:background="#00ff6666"
         android:orientation="vertical">
 
 
@@ -43,7 +41,6 @@
             android:id="@+id/simpleListView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:divider="#FFFF66"
             android:dividerHeight="10dp" />
     </LinearLayout>
 
@@ -51,7 +48,8 @@
         android:id="@+id/separatorlayout"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@+id/layoutforrecyclerview"
-        android:orientation="horizontal"></LinearLayout>
+        android:orientation="horizontal">
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/back_image2"
     android:orientation="vertical"
     tools:context="com.example.dhp.codefundo.MainActivity">
 
@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
+        android:background="@color/semiTransparent2"
         android:orientation="horizontal"
         android:padding="5dp"
         android:paddingBottom="10dp"
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Create Group "
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="40dp"
             android:textStyle="bold" />
 
@@ -36,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"
+        android:background="@color/semiTransparent2"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -46,17 +48,23 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="Enter personGroupId :"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
         <EditText
             android:id="@+id/groupidname"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:hint="person group Id"
-            android:textColor="#000000" />
+            android:textColor="#FFFFFF"
+            android:textColorHint="@color/textColorHint" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+        </View>
 
         <TextView
             android:id="@+id/namequestion"
@@ -64,20 +72,24 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#FFFF66"
             android:text="Enter personGroup name :"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
         <EditText
             android:id="@+id/groupname"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#FFFFFF"
+            android:textColorHint="@color/textColorHint"
             android:hint="person group name"
-            android:textColor="#000000" />
+            android:textColor="#FFFFFF" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+        </View>
 
         <TextView
             android:id="@+id/userdataquestion"
@@ -85,20 +97,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#FFFF66"
             android:text="Enter personGroup user-data:"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
         <EditText
             android:id="@+id/groupuserdata"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#FFFFFF"
+            android:textColorHint="@color/textColorHint"
             android:hint="person group user-data"
-            android:textColor="#000000" />
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
@@ -108,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-
+        android:background="@color/semiTransparent2"
         android:gravity="center|bottom"
         android:padding="5dp">
 

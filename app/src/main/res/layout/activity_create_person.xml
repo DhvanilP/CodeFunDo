@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/myPrimaryDark"
+    android:background="@drawable/back_image2"
+    android:padding="5dp"
     android:orientation="vertical"
     tools:context="com.example.dhp.codefundo.CreatePerson">
 
@@ -17,21 +18,23 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="ADD PERSON"
-            android:textColor="#000000"
+            android:padding="10dp"
+            android:textColor="@color/white"
             android:textSize="30dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/personGroup"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:layout_margin="3dp"
-            android:background="@color/transparent"
             android:hint="Enter group name"
-            android:textColor="#000000"
+            android:textColorHint="@color/textColorHint"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="italic" />
 
@@ -39,22 +42,24 @@
         <EditText
             android:id="@+id/personName"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:layout_margin="3dp"
-            android:background="@color/transparent"
             android:hint="Enter name"
-            android:textColor="#000000"
+            android:textColorHint="@color/textColorHint"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="italic" />
 
         <EditText
             android:id="@+id/personRoll"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:layout_margin="3dp"
-            android:background="@color/transparent"
             android:hint="Enter Roll Number"
-            android:textColor="#000000"
+            android:textColorHint="@color/textColorHint"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="italic" />
     </LinearLayout>
@@ -71,7 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ph_add_image" />
+            android:alpha="0.7"
+            android:src="@drawable/ph_add_image2" />
     </LinearLayout>
 
     <LinearLayout

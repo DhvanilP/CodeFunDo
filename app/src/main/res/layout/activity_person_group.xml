@@ -4,21 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="4dp"
+    android:padding="5dp"
+    android:background="@drawable/back_image2"
     tools:context=".PersonGroup">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FFFF66">
+        android:padding="40dp"
+        android:layout_weight="1">
 
         <ImageView
             android:id="@+id/imageViewAttach"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="TODO"
-            android:src="@drawable/ph_add_image" />
+            android:alpha="0.7"
+            android:src="@drawable/ph_add_image2" />
 
     </LinearLayout>
 

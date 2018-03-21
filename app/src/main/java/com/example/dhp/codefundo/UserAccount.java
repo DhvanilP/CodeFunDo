@@ -35,21 +35,24 @@ public class UserAccount extends AppCompatActivity {
         attendenceonParticularDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(),SpecificDayGroupAttendence.class);
+                startActivity(i);
             }
         });
 
         specificPersonTotalattendence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(),SpecificPersonTA.class);
+                startActivity(i);
             }
         });
 
         personSpecificDayAttendence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(),PersonSpecificDayAttendence.class);
+                startActivity(i);
             }
         });
 
