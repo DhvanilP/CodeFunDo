@@ -16,6 +16,7 @@ public final class BatchEntry {
     public final static String studentName = "studentName";
     public final static String markedAttendence = "markedAttendence";
     public final static String totalAttendence = "totalAttendence";
+    public final static String emailAddress = "emailAddress";
     public static String TABLE_NAME;
 
 

@@ -47,6 +47,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
                     + BatchEntry.rollNumber + " TEXT PRIMARY KEY, "
                     + BatchEntry.studentName + " TEXT NOT NULL, "
                     + BatchEntry.markedAttendence + " INTEGER, "
+                    + BatchEntry.emailAddress + " TEXT, "
                     + BatchEntry.totalAttendence + " INTEGER);";
             db.execSQL(SQL_CREATE_PETS_TABLE);
             Log.v("AttendanceDbHelper", "Table created");
