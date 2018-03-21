@@ -4,7 +4,7 @@ Image Attendance System is an online attendance system made as a part of CodeFun
 This app aims at marking the attendance status of a class by just clicking  pictures thus conserving
 time and solving problems like proxy that are given by students.
 
-##Instructions
+## Instructions
 - First create the group in the homescreen and the id should be unique
 
 - Secondly add the data of the person like image roll number in the add person activity
