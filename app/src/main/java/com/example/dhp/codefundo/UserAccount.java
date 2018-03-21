@@ -43,7 +43,8 @@ public class UserAccount extends AppCompatActivity {
         specificPersonTotalattendence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(),SpecificPersonTA.class);
+                startActivity(i);
             }
         });
 
