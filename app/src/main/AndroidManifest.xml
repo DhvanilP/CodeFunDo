@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -31,9 +32,9 @@
         <activity android:name=".DeletePerson" />
         <activity android:name=".MarkAttendence" />
         <activity android:name=".UserAccount" />
-        <activity android:name=".EmailActivity" />
         <activity android:name=".BatchEntry$WelcomeActivity" />
-        <activity android:name=".TotalGroupAttendence"></activity>
+        <activity android:name=".TotalGroupAttendence" />
+        <activity android:name=".EmailActivity"></activity>
     </application>
 
 </manifest>
