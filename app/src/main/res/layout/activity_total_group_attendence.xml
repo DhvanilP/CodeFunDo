@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFF66"
+    android:background="@drawable/back_image2"
     android:orientation="vertical"
     tools:context="com.example.dhp.codefundo.MainActivity">
 
@@ -11,12 +11,9 @@
     <LinearLayout
         android:id="@+id/spacing"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/top"
@@ -24,18 +21,18 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:text="Enter GroupId"
-            android:textColor="#000000"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
+
         <EditText
             android:id="@+id/groupid"
+            android:paddingStart="20dp"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="5dp"
-            android:background="#ffffff"
+            android:layout_height="wrap_content"
             android:hint="Group id"
-            android:textColor="#000000"
-            />
+            android:textColor="@color/white"
+            android:textColorHint="@color/textColorHint" />
 
     </LinearLayout>
 
@@ -43,9 +40,7 @@
     <LinearLayout
         android:id="@+id/layoutforrecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="#FFFF66"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -57,72 +52,74 @@
             android:background="@color/colorPrimary"
             android:text="Submit"
             android:textColor="#FFFFFF" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Student Roll"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 android:textSize="25dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=" MA"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 android:textSize="25dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TA"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 android:textSize="25dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:background="#FFFF66"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp"
-        >
+        android:padding="5dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
+
             <ListView
                 android:id="@+id/roll_listview"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:divider="#FFFF66"
-                android:dividerHeight="10dp"/>
+                android:dividerHeight="10dp" />
+
             <ListView
                 android:id="@+id/ma_listview"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:divider="#FFFF66"
-                android:dividerHeight="10dp"/>
+                android:dividerHeight="10dp" />
+
             <ListView
                 android:id="@+id/ta_listview"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:divider="#FFFF66"
-                android:dividerHeight="10dp"/>
+                android:dividerHeight="10dp" />
 
         </LinearLayout>
 

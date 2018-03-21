@@ -39,6 +39,7 @@ public class PersonSpecificDayAttendence extends AppCompatActivity {
                 String name = groupid.getText().toString().trim();
                 String findday = datefield.getText().toString().trim();
                 String finalpersonroll = personrollno.getText().toString().trim();
+                if(findday.length()!=0){
                 ReturnColumnName rcn = new ReturnColumnName(findday);
                 findday = rcn.returncolumn();
 
@@ -134,6 +135,12 @@ public class PersonSpecificDayAttendence extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"NO records on such date is present",Toast.LENGTH_SHORT).show();
                 }
                 db.close();
+                }else{
+//                    Toast.makeText(getApplicationContext(),"This field can't be null",Toast.LENGTH_SHORT).show();
+                    datefield.setError("This field can't be null");
+                    datefield.requestFocus();
+                    return;
+                }
             }
         });
     }

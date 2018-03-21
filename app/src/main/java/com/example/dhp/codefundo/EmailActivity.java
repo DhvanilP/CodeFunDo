@@ -34,7 +34,7 @@ public class EmailActivity extends AppCompatActivity {
 //                        Toast.makeText(getApplicationContext(), "Image found", Toast.LENGTH_LONG).show();
 //                        imageView.setImageBitmap(myBitmap);
 //                    }
-                    sender.addAttachment(pathOfImage, "Test mail");
+//                    sender.addAttachment(pathOfImage, "Test mail");
                     sender.sendMail("Test mail", "This mail has been sent from android app along with attachment",
                             "cfdwhitewalkers@gmail.com",
                             "suyashghuge@gmail.com");
