@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_margin="3dp"
-            android:hint="Enter name"
+            android:hint="Enter Name"
             android:textColorHint="@color/textColorHint"
             android:textColor="@color/white"
             android:textSize="20dp"

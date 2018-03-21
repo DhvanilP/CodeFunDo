@@ -140,6 +140,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             new android.app.AlertDialog.Builder(this).setTitle("No internet")
                     .setMessage("Check your internet connection and try again!")
+                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            finish();
+                        }
+                    })
                     .setPositiveButton("Close", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
