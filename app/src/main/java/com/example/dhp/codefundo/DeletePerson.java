@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class DeletePerson extends AppCompatActivity {
-    static final String SERVER_HOST = "https://southeastasia.api.cognitive.microsoft.com/face/v1.0";
-    static final String SUBSCRIPTION_KEY = "eb5c5e259ead4741b0e2792b17fbc98c";
+    static final String SERVER_HOST = MainActivity.SERVER_HOST;
+    static final String SUBSCRIPTION_KEY = MainActivity.SUBSCRIPTION_KEY;
     private static FaceServiceClient faceServiceClient;
     ListView simpleList;
     UUID[] personID;

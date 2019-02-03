@@ -42,8 +42,8 @@ import java.util.UUID;
 
 public class PersonGroup extends AppCompatActivity implements Imageutils.ImageAttachmentListener {
 
-    static final String SERVER_HOST = "https://southeastasia.api.cognitive.microsoft.com/face/v1.0";
-    static final String SUBSCRIPTION_KEY = "eb5c5e259ead4741b0e2792b17fbc98c";
+    static final String SERVER_HOST = MainActivity.SERVER_HOST;
+    static final String SUBSCRIPTION_KEY = MainActivity.SUBSCRIPTION_KEY;
     static int i = 0;
     static String groupid;
     private static FaceServiceClient faceServiceClient;
